@@ -574,7 +574,6 @@ body {
   font-family: "Noto Serif TC", serif;
   font-optical-sizing: auto;
   font-style: normal;
-  height: 400vh;
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
   --tw-gradient-from: #F7F3F0 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(247 243 240 / 0) var(--tw-gradient-to-position);
@@ -763,6 +762,8 @@ body {
 }
 
 .square-card {
+  transform: perspective(2500px) rotateY(-90deg);
+  backface-visibility: hidden;
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
   --tw-gradient-from: #E7DED6 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(231 222 214 / 0) var(--tw-gradient-to-position);

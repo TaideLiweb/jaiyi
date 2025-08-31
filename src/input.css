@@ -24,7 +24,7 @@
     font-style: normal;
   }
   body {
-    @apply noto-serif-tc h-[400vh] bg-gradient-to-b from-[#F7F3F0] to-[#CDB9A8];
+    @apply noto-serif-tc bg-gradient-to-b from-[#F7F3F0] to-[#CDB9A8];
   }
   .bg {
     background-image: url(../images/section-1-bg.png);
@@ -84,6 +84,8 @@
     @apply relative z-[1] flex flex-col items-center justify-center text-center text-2xl font-bold text-[#0b387b] md:text-lg lg:text-2xl;
   }
   .square-card {
+    transform: perspective(2500px) rotateY(-90deg);
+    backface-visibility: hidden;
     @apply gradient-gold-1 relative flex h-[400px] w-full flex-col items-center gap-6 rounded-md p-5 md:w-[calc(50%_-_20px)];
   }
   .square-card-text {

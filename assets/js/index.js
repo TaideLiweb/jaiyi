@@ -13,6 +13,7 @@
 
 window.addEventListener("load", () => {
   const circleCards = document.querySelectorAll(".circle-card")
+  const squareCards = document.querySelectorAll(".square-card")
   const bgDecorate = document.querySelectorAll(".bg-decorate")
   const goToTop = document.getElementById("go-to-top")
   const quizPosition = document.querySelector("#quiz-position")
@@ -60,7 +61,6 @@ window.addEventListener("load", () => {
 
   // GSAP scroll-behavior: smooth 有 bug
   gsap.registerPlugin(ScrollTrigger)
-
   const mm = gsap.matchMedia()
 
   mm.add(
@@ -81,6 +81,21 @@ window.addEventListener("load", () => {
             trigger: el,
             // 用函式值，斷點切換/refresh 時會重新計算
             start: () => (mobile ? "top 50%" : `top ${50 - index * 5}%`),
+            toggleActions: "play none none reverse",
+            // markers: true, // 除錯時開，正式環境記得關
+            invalidateOnRefresh: true, // 尺寸變更時重新取 start
+          },
+        })
+      })
+      squareCards.forEach((el, index) => {
+        gsap.to(el, {
+          rotationY: 0,
+          duration: 1,
+          //   ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: el,
+            // 用函式值，斷點切換/refresh 時會重新計算
+            start: () => (mobile ? "top 50%" : `top ${40 - index * 5}%`),
             toggleActions: "play none none reverse",
             // markers: true, // 除錯時開，正式環境記得關
             invalidateOnRefresh: true, // 尺寸變更時重新取 start
@@ -169,7 +184,8 @@ window.addEventListener("load", () => {
   })
 
   const resizeHandle = () => {
-    ScrollTrigger.refresh()
+    // ScrollTrigger.refresh()
+    ScrollTrigger.update()
     isMobile = window.matchMedia("(max-width: 768px)").matches
     isTablet = window.matchMedia(
       "(min-width: 769px) and (max-width: 1000px)",
