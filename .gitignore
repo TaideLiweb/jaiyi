@@ -1,0 +1,10 @@
+.idea/
+.DS_Store
+/node_modules
+public/
+/tmp
+.vscode
+*.zip
+minify/
+.qodo
+package-lock.json

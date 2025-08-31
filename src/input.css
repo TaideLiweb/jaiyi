@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @theme {
+  
+  --breakpoint-sm: initial;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: initial;
+  --breakpoint-2xl: initial;
+
+  --container-md: 80%;
+  --container-xl: 1200px;
+} */
+
+/* <weight>: Use a value from 100 to 900 */
+/* <uniquifier>: Use a unique and descriptive class name */
+
+@layer components {
+  .noto-serif-tc {
+    font-family: "Noto Serif TC", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+  body {
+    @apply noto-serif-tc h-[400vh] bg-gradient-to-b from-[#F7F3F0] to-[#CDB9A8];
+  }
+  .bg {
+    background-image: url(../images/section-1-bg.png);
+    background-size: cover;
+    background-position: center;
+    /* 用 mask 控制透明度 (WebKit: Chrome / Safari) */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 80%,
+      /* 上面 80% 保持不透明 */ rgba(0, 0, 0, 0) 100% /* 最下面 20% 變透明 */
+    );
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+  }
+  .gradient-white-blue-1 {
+    @apply bg-gradient-to-b from-white to-[#E2F3FF];
+  }
+  .gradient-white-blue-2 {
+    @apply bg-[linear-gradient(to_top,#0B387B_0%,#14A4CF_55%,#14A4CF_100%)];
+  }
+  .gradient-white-blue-3 {
+    @apply bg-[linear-gradient(to_bottom,#0F3773_0%,#0074A4_48%,#0074A4_100%)];
+  }
+  .gradient-gold-1 {
+    @apply bg-gradient-to-b from-[#E7DED6] to-[#AB8A6E];
+  }
+  .gradient-gold-2 {
+    @apply bg-gradient-to-b from-[#AB8A6E] to-[#603813];
+  }
+
+  .container {
+    @apply relative mx-auto px-5;
+  }
+  .section {
+    @apply relative pb-20;
+  }
+  .section-title {
+    @apply mb-10 w-full text-center font-bold;
+  }
+  .section-title h2 {
+    @apply gradient-white-blue-1 mb-3 rounded-full border border-[#0b387b] px-5 py-1 text-lg text-[#0B387B] shadow-[0_5px_3px_#edd9c3] md:mb-7 md:py-6 md:text-[34px];
+  }
+  .section-title p {
+    @apply text-lg text-[#754C24] md:text-[32px];
+  }
+
+  .circle-card {
+    @apply gradient-gold-1 relative flex h-[200px] w-[200px] translate-y-[-40px] flex-col items-center justify-center rounded-full opacity-0 md:h-[150px] md:w-[150px] lg:h-[200px] lg:w-[200px];
+  }
+  .circle-card::after {
+    @apply gradient-white-blue-1 absolute left-[4%] top-[4%] h-[92%] w-[92%] rounded-full border border-white content-[''];
+  }
+  .circle-card-icon {
+    @apply relative z-[1] -mt-5 mb-5 w-[20%] md:-mt-3 md:mb-3;
+  }
+  .circle-card-text {
+    @apply relative z-[1] flex flex-col items-center justify-center text-center text-2xl font-bold text-[#0b387b] md:text-lg lg:text-2xl;
+  }
+  .square-card {
+    @apply gradient-gold-1 relative flex h-[400px] w-full flex-col items-center gap-6 rounded-md p-5 md:w-[calc(50%_-_20px)];
+  }
+  .square-card-text {
+    @apply relative z-[1] text-center text-[#0b387b];
+  }
+  .square-card::after {
+    @apply gradient-white-blue-1 absolute left-[2%] top-[2%] h-[96%] w-[96%] content-[''];
+  }
+  .square-card-logo {
+    @apply relative z-[1] flex w-full justify-center border-b border-[#808080] pb-4;
+  }
+  .square-card-btn {
+    @apply gradient-white-blue-2 absolute bottom-8 left-0 right-0 z-[1] mx-auto flex w-fit gap-2 rounded-full px-6 py-2 text-white transition-opacity duration-300 hover:opacity-80;
+  }
+  .download-btn {
+    @apply gradient-white-blue-2 mx-auto flex rounded-full px-6 py-2 text-white transition-opacity duration-300 hover:opacity-80;
+  }
+
+  .footer {
+    @apply gradient-white-blue-3 py-5 text-white;
+  }
+  #go-to-top {
+    @apply gradient-gold-2 pointer-events-none fixed bottom-[80px] right-[25px] z-10 flex cursor-pointer flex-col items-center rounded-2xl border border-[#C8B3A1] bg-[#C8B3A1] px-3 pb-3 pt-2 text-[#E7DDD5] opacity-0 shadow-[0_5px_0px_#C8B3A1] transition-opacity duration-300;
+  }
+  #go-to-top.active {
+    @apply pointer-events-auto opacity-100 hover:opacity-90;
+  }
+}
