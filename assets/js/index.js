@@ -91,7 +91,6 @@ window.addEventListener("load", () => {
         gsap.to(el, {
           rotationY: 0,
           duration: 1,
-          //   ease: "power1.inOut",
           scrollTrigger: {
             trigger: el,
             // 用函式值，斷點切換/refresh 時會重新計算
@@ -104,6 +103,24 @@ window.addEventListener("load", () => {
       })
     },
   )
+
+  const topTitle = document.querySelector(".top-title")
+  if (topTitle) {
+    gsap.to(topTitle, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: "power2.out",
+    })
+  }
+
+  gsap.to(".dishwasher", {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    stagger: 0.3, // 每個間隔 0.3 秒進場
+    ease: "power2.out",
+  })
 
   bgDecorate.forEach((el, index) => {
     gsap.to(el, {
