@@ -17,13 +17,8 @@ window.addEventListener("load", () => {
   const bgDecorate = document.querySelectorAll(".bg-decorate")
   const goToTop = document.getElementById("go-to-top")
   const quizPosition = document.querySelector("#quiz-position")
-  const blandSwiper = document.querySelector(".bland-swiper")
   const capture = document.querySelector("#capture")
   const downloadBtn = document.querySelector(".download-btn")
-  let isMobile = window.matchMedia("(max-width: 768px)").matches
-  let isTablet = window.matchMedia(
-    "(min-width: 769px) and (max-width: 1000px)",
-  ).matches
 
   const blandSwiperInstance = new Swiper(".bland-swiper", {
     slidesPerView: 1,
@@ -139,59 +134,6 @@ window.addEventListener("load", () => {
     })
   })
 
-  //   // 火箭移動動畫
-  //   gsap.to(".rocket", {
-  //     scrollTrigger: {
-  //       trigger: ".rocket",
-  //       start: "top-=200 80%",
-  //       end: "top-=200 20%",
-  //       scrub: 2,
-  //       // markers: true,
-  //     },
-  //     x: "120%",
-  //     y: "-100%",
-  //     ease: "none",
-  //     duration: 3,
-  //   })
-
-  //   // section-5 背景動畫放大
-  //   gsap.to(".section-5-bg", {
-  //     scrollTrigger: {
-  //       trigger: ".section-5-bg",
-  //       start: "center 80%",
-  //       end: "center 20%",
-  //       scrub: 2,
-  //       // markers: true,
-  //     },
-  //     scale: 1.3,
-  //     ease: "none",
-  //     duration: 3,
-  //   })
-  const characters =
-    "嘉儀家品世界品牌洗碗機選購指南一站選對世界品牌，洗碗機購足新主張！"
-  const charactersArray = []
-
-  characters.split("").forEach((char, index) => {
-    if (document.getElementById(`character-target-${index + 1}`)) {
-      const writer = HanziWriter.create(`character-target-${index + 1}`, char, {
-        width: 50,
-        height: 50,
-        padding: 0,
-        showOutline: false,
-        strokeAnimationSpeed: 2, // 5x normal speed
-        delayBetweenStrokes: 1, // millisecond
-        strokeColor: `${index > 14 ? "#754C24" : "#0c397c"}`,
-      })
-
-      charactersArray.push(writer)
-    }
-  })
-
-  charactersArray.forEach((writer, index) => {
-    writer.hideCharacter()
-    writer.animateCharacter()
-  })
-
   downloadBtn.addEventListener("click", async () => {
     // 直接保存為檔案
     await snapdom.download(capture, {
@@ -203,43 +145,8 @@ window.addEventListener("load", () => {
   const resizeHandle = () => {
     // ScrollTrigger.refresh()
     ScrollTrigger.update()
-    isMobile = window.matchMedia("(max-width: 768px)").matches
-    isTablet = window.matchMedia(
-      "(min-width: 769px) and (max-width: 1000px)",
-    ).matches
-    if (isMobile) {
-      // 手機版特效
-      charactersArray.forEach((writer) =>
-        writer.updateDimensions({ width: 20, height: 20 }),
-      )
-    } else if (isTablet) {
-      // 平板版特效
-      charactersArray.forEach((writer) =>
-        writer.updateDimensions({ width: 35, height: 35 }),
-      )
-    } else {
-      // 桌機版特效
-      charactersArray.forEach((writer) =>
-        writer.updateDimensions({ width: 50, height: 50 }),
-      )
-    }
   }
 
   resizeHandle()
   window.addEventListener("resize", resizeHandle)
-  //   setTimeout(() => {
-  //     charactersArray[0].updateDimensions({ width: 20, height: 20 })
-  //   }, 1000)
-
-  //   const delay = (ms) => new Promise((r) => setTimeout(r, ms))
-  //   const animateOnce = (writer) =>
-  //     new Promise((resolve) => writer.animateCharacter({ onComplete: resolve }))
-
-  //   ;(async () => {
-  //     for (let i = 0; i < charactersArray.length; i++) {
-  //       console.log(i + 1)
-  //       await animateOnce(charactersArray[i]) // 等當前完成
-  //       await delay(30) // 再等 0.03 秒
-  //     }
-  //   })()
 })
