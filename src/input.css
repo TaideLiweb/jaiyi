@@ -70,6 +70,9 @@
   .section-title p {
     @apply text-lg text-[#754C24] md:text-[32px];
   }
+  .dishwasher {
+    @apply flex flex-col items-center gap-4 opacity-0;
+  }
 
   .circle-card {
     @apply gradient-gold-1 relative flex h-[200px] w-[200px] translate-y-[-40px] flex-col items-center justify-center rounded-full opacity-0 md:h-[150px] md:w-[150px] lg:h-[200px] lg:w-[200px];
