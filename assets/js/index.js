@@ -230,28 +230,20 @@ window.addEventListener("load", () => {
 
       // 擷取表單資料並在 console 中顯示
       const formData = getCaptureData()
-      console.log("擷取到的問卷資料:", formData)
+      // console.log("擷取到的問卷資料:", formData)
 
       try {
-        prepareCheckboxes(capture)
-        const dataUrl = await snapdom.toPng(capture, {
-          backgroundColor: "#FFFFFF",
-        })
-        const link = document.createElement("a")
-        link.download = "嘉儀家品-洗碗機選購指南.png"
-        link.href = dataUrl
-        document.body.appendChild(link) // 為了 Firefox 的相容性
-        link.click()
-        document.body.removeChild(link)
-        restoreCheckboxes(capture)
+        const result = await snapdom(capture, { scale: 2 })
+        await result.download({ format: "png", filename: "使用空閒與考量" })
       } catch (error) {
         console.error("Oops, something went wrong!", error)
-        alert("圖片下載失敗，請稍後再試。")
+        alert("圖片截圖失敗，請稍後再試。")
       } finally {
         // 還原畫面
         if (navButtonsContainer) navButtonsContainer.style.display = ""
-        formNextBtn.disabled = false
         updateFormView()
+        formNextBtn.disabled = false
+        formNextBtn.textContent = "下載"
       }
     }
   })
@@ -260,39 +252,6 @@ window.addEventListener("load", () => {
     if (currentQuestionIndex > 0) {
       currentQuestionIndex--
       updateFormView()
-    }
-  })
-
-  document.querySelector(".capture-btn").addEventListener("click", async () => {
-    const captureBtn = document.querySelector(".capture-btn")
-    if (!capture) return
-
-    captureBtn.disabled = true
-    const originalText = captureBtn.textContent
-    captureBtn.textContent = "截圖中..."
-
-    // 暫時顯示所有問題以供截圖
-    questions.forEach((q) => q.classList.remove("hidden"))
-    const navButtonsContainer = capture.querySelector(
-      '[data-capture="exclude"]',
-    )
-    if (navButtonsContainer) navButtonsContainer.style.display = "none"
-
-    try {
-      const result = await snapdom(capture, { scale: 2 })
-      const dataUrl = await snapdom.toPng(capture, {
-        backgroundColor: "#FFFFFF",
-      })
-      await result.download({ format: "png", filename: "使用空閒與考量" })
-    } catch (error) {
-      console.error("Oops, something went wrong!", error)
-      alert("圖片截圖失敗，請稍後再試。")
-    } finally {
-      // 還原畫面
-      if (navButtonsContainer) navButtonsContainer.style.display = ""
-      updateFormView()
-      captureBtn.disabled = false
-      captureBtn.textContent = originalText
     }
   })
 
