@@ -18,7 +18,17 @@ window.addEventListener("load", () => {
   const goToTop = document.getElementById("go-to-top")
   const quizPosition = document.querySelector("#quiz-position")
   const capture = document.querySelector("#capture")
-  const downloadBtn = document.querySelector(".download-btn")
+  const formNextBtn = document.querySelector(".form-next-btn")
+  const formPrevBtn = document.querySelector(".form-prev-btn")
+
+  // 限制尺寸輸入框只能輸入數字
+  const dimensionInputs = document.querySelectorAll("#q1-4, #q1-5, #q1-6")
+  dimensionInputs.forEach((input) => {
+    input.addEventListener("input", (event) => {
+      // 將輸入值中的非數字字符替換為空字符串
+      event.target.value = event.target.value.replace(/\D/g, "")
+    })
+  })
 
   const blandSwiperInstance = new Swiper(".bland-swiper", {
     slidesPerView: 1,
@@ -134,16 +144,162 @@ window.addEventListener("load", () => {
     })
   })
 
-  downloadBtn.addEventListener("click", async () => {
-    // 直接保存為檔案
-    await snapdom.download(capture, {
-      format: "png",
-      filename: "使用空間與考量",
+  // 擷取 #capture 區塊內的表單資料
+  function getCaptureData() {
+    const captureEl = document.querySelector("#capture")
+    if (!captureEl) return null
+
+    const data = {}
+
+    // 問題 1: 包含 checkbox 和尺寸輸入
+    const q1Selections = []
+    captureEl
+      .querySelectorAll('#q1 input[type="checkbox"]:checked')
+      .forEach((cb) => {
+        const label = captureEl.querySelector(`label[for="${cb.id}"]`)
+        if (label) q1Selections.push(label.textContent.trim())
+      })
+    data.q1 = {
+      selections: q1Selections,
+      dimensions: {
+        width: captureEl.querySelector("#q1-4").value || "",
+        depth: captureEl.querySelector("#q1-5").value || "",
+        height: captureEl.querySelector("#q1-6").value || "",
+      },
+    }
+
+    // 問題 2, 3, 4: 只有 checkbox
+    for (let i = 2; i <= 4; i++) {
+      const selections = []
+      captureEl
+        .querySelectorAll(`#q${i} input[type="checkbox"]:checked`)
+        .forEach((cb) => {
+          const label = captureEl.querySelector(`label[for="${cb.id}"]`)
+          if (label) selections.push(label.textContent.trim())
+        })
+      data[`q${i}`] = selections
+    }
+
+    return data
+  }
+  // Quiz logic
+  const questions = [
+    document.getElementById("q1"),
+    document.getElementById("q2"),
+    document.getElementById("q3"),
+    document.getElementById("q4"),
+  ]
+  const totalQuestions = questions.length
+  let currentQuestionIndex = 0 // 0-based index
+
+  function updateFormView() {
+    // 隱藏所有問題，並顯示當前的問題
+    questions.forEach((q, index) => {
+      if (index === currentQuestionIndex) {
+        q.classList.remove("hidden")
+      } else {
+        q.classList.add("hidden")
+      }
     })
+
+    // 更新按鈕的可見性和文字
+    formPrevBtn.classList.toggle("hidden", currentQuestionIndex === 0)
+
+    if (currentQuestionIndex === totalQuestions - 1) {
+      formNextBtn.textContent = "下載"
+    } else {
+      formNextBtn.textContent = "下一題"
+    }
+  }
+
+  formNextBtn.addEventListener("click", async () => {
+    if (currentQuestionIndex < totalQuestions - 1) {
+      currentQuestionIndex++
+      updateFormView()
+    } else {
+      // 這是「下載」按鈕的操作
+      formNextBtn.disabled = true
+      formNextBtn.textContent = "下載中..."
+
+      // 暫時顯示所有問題以供截圖
+      questions.forEach((q) => q.classList.remove("hidden"))
+      const navButtonsContainer = capture.querySelector(
+        '[data-capture="exclude"]',
+      )
+      if (navButtonsContainer) navButtonsContainer.style.display = "none"
+
+      // 擷取表單資料並在 console 中顯示
+      const formData = getCaptureData()
+      console.log("擷取到的問卷資料:", formData)
+
+      try {
+        prepareCheckboxes(capture)
+        const dataUrl = await snapdom.toPng(capture, {
+          backgroundColor: "#FFFFFF",
+        })
+        const link = document.createElement("a")
+        link.download = "嘉儀家品-洗碗機選購指南.png"
+        link.href = dataUrl
+        document.body.appendChild(link) // 為了 Firefox 的相容性
+        link.click()
+        document.body.removeChild(link)
+        restoreCheckboxes(capture)
+      } catch (error) {
+        console.error("Oops, something went wrong!", error)
+        alert("圖片下載失敗，請稍後再試。")
+      } finally {
+        // 還原畫面
+        if (navButtonsContainer) navButtonsContainer.style.display = ""
+        formNextBtn.disabled = false
+        updateFormView()
+      }
+    }
   })
 
+  formPrevBtn.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--
+      updateFormView()
+    }
+  })
+
+  document.querySelector(".capture-btn").addEventListener("click", async () => {
+    const captureBtn = document.querySelector(".capture-btn")
+    if (!capture) return
+
+    captureBtn.disabled = true
+    const originalText = captureBtn.textContent
+    captureBtn.textContent = "截圖中..."
+
+    // 暫時顯示所有問題以供截圖
+    questions.forEach((q) => q.classList.remove("hidden"))
+    const navButtonsContainer = capture.querySelector(
+      '[data-capture="exclude"]',
+    )
+    if (navButtonsContainer) navButtonsContainer.style.display = "none"
+
+    try {
+      const result = await snapdom(capture, { scale: 2 })
+      const dataUrl = await snapdom.toPng(capture, {
+        backgroundColor: "#FFFFFF",
+      })
+      await result.download({ format: "png", filename: "使用空閒與考量" })
+    } catch (error) {
+      console.error("Oops, something went wrong!", error)
+      alert("圖片截圖失敗，請稍後再試。")
+    } finally {
+      // 還原畫面
+      if (navButtonsContainer) navButtonsContainer.style.display = ""
+      updateFormView()
+      captureBtn.disabled = false
+      captureBtn.textContent = originalText
+    }
+  })
+
+  // 初始化表單畫面
+  updateFormView()
+
   const resizeHandle = () => {
-    // ScrollTrigger.refresh()
     ScrollTrigger.update()
   }
 

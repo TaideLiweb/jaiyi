@@ -277,7 +277,10 @@
             <h2>命定洗碗機 Quiz</h2>
             <p>世界品牌，一次選到家</p>
           </div>
-          <div class="bg-white text-[#382C27] lg:text-lg" id="capture">
+          <div
+            class="bg-white font-[600] text-[#382C27] lg:text-lg"
+            id="capture"
+          >
             <h3
               class="gradient-white-blue-2 py-4 text-center text-xl text-white"
             >
@@ -287,7 +290,7 @@
               「每個家庭的廚房格局、生活習慣都不同，挑選洗碗機前，先了解自己的需求很重要。我們為你準備了簡單問題，3分鐘就能幫助你快速判斷，選擇命定機型!
             </p>
             <div class="p-6 pt-0">
-              <div class="mb-6">
+              <div id="q1" class="mb-6">
                 <h4 class="mb-2">1.預計放置位置</h4>
                 <ul class="mb-2 flex flex-wrap gap-x-2">
                   <li>
@@ -336,7 +339,7 @@
                   </div>
                 </div>
               </div>
-              <div class="mb-6">
+              <div id="q2" class="mb-6 hidden">
                 <h4 class="mb-2">2.現場水電是否具備以下條件：</h4>
                 <ul class="flex flex-wrap gap-x-2">
                   <li>
@@ -347,7 +350,7 @@
                     <input id="q2-2" type="checkbox" />
                     <label for="q2-2">有220V插座</label>
                   </li>
-                  <li class="w-[121px] text-center lg:w-[140px]">
+                  <li class="w-[121px] lg:w-[140px] lg:text-center">
                     <input id="q2-3" type="checkbox" />
                     <label for="q2-3">有進水/排水口</label>
                   </li>
@@ -357,7 +360,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="mb-6">
+              <div id="q3" class="mb-6 hidden">
                 <h4 class="mb-2">3.您最重視的功能是？</h4>
                 <ul class="flex flex-wrap gap-x-2">
                   <li>
@@ -386,18 +389,18 @@
                   </li>
                 </ul>
               </div>
-              <div class="mb-6">
+              <div id="q4" class="mb-6 hidden">
                 <h4 class="mb-2">4.有預算範圍嗎？</h4>
                 <ul class="flex flex-wrap gap-x-2">
                   <li>
                     <input id="q4-1" type="checkbox" />
                     <label for="q4-1">2萬以下（桌上型為主）</label>
                   </li>
-                  <li class="w-[200px] text-center lg:w-[220px]">
+                  <li class="w-[200px] lg:w-[220px] lg:text-center">
                     <input id="q4-2" type="checkbox" />
                     <label for="q4-2">2–4萬（多功能入門款）</label>
                   </li>
-                  <li class="w-[170px] text-center lg:w-[180px]">
+                  <li class="w-[170px] lg:w-[180px] lg:text-center">
                     <input id="q4-3" type="checkbox" />
                     <label for="q4-3">4–6萬（中高階型）</label>
                   </li>
@@ -412,11 +415,12 @@
                 </ul>
               </div>
               <div
-                class="flex flex-col items-center justify-center"
+                class="flex items-center justify-center gap-5"
                 data-capture="exclude"
               >
-                <button class="download-btn">下載</button>
-                <span class="text-[10px]">*或自行螢幕截圖</span>
+                <button class="form-btn form-prev-btn hidden">上一題</button>
+                <button class="form-btn form-next-btn">下一題</button>
+                <button class="form-btn capture-btn">截圖</button>
               </div>
             </div>
           </div>
@@ -435,7 +439,7 @@
             </h2>
           </div>
           <div
-            class="flex flex-col items-center gap-10 md:flex-row md:flex-wrap"
+            class="flex flex-col items-center gap-10 font-[600] md:flex-row md:flex-wrap"
           >
             <div class="square-card">
               <a class="square-card-logo" target="_blank">
@@ -529,7 +533,7 @@
                 class="square-card-btn"
                 href="https://whirlpool.kenk.com.tw/product.php?lang=tw&tb=1&cid=4"
                 target="_blank"
-                >Whirlpool洗洗碗機<span>＞</span>
+                >Whirlpool洗碗機<span>＞</span>
               </a>
             </div>
             <div class="square-card">
@@ -557,7 +561,7 @@
                 class="square-card-btn"
                 href="https://kedw.kenk.com.tw/"
                 target="_blank"
-                >KE 洗洗碗機<span>＞</span>
+                >KE 洗碗機<span>＞</span>
               </a>
             </div>
           </div>
@@ -628,13 +632,13 @@
           <h2 class="text-2xl">歡迎體驗洗碗機</h2>
           <div class="flex items-center gap-2 text-[12px]">
             <a
-              href="https://ke.kenk.com.tw/article_d.php?lang=tw&tb=3&id=38&ot=all"
+              href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
               target="_blank"
               class="rounded-full border border-white px-2 py-[2px] tracking-widest"
               >全台百貨櫃位</a
             >
             <a
-              href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
+              href="https://ke.kenk.com.tw/article_d.php?lang=tw&tb=3&id=38&ot=all"
               target="_blank"
               class="rounded-full border border-white px-2 py-[2px] tracking-widest"
               >全省展示中心</a
@@ -686,6 +690,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@zumer/snapdom/dist/snapdom.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="assets/js/swiper-bundle.js"></script>
     <script src="assets/js/index.js"></script>
   </body>

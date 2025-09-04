@@ -850,10 +850,8 @@ body {
   opacity: 0.8;
 }
 
-.download-btn {
+.form-btn {
   background-image: linear-gradient(to top,#0B387B 0%,#14A4CF 55%,#14A4CF 100%);
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   border-radius: 9999px;
   padding-left: 1.5rem;
@@ -867,7 +865,7 @@ body {
   transition-duration: 300ms;
 }
 
-.download-btn:hover {
+.form-btn:hover {
   opacity: 0.8;
 }
 
@@ -1012,6 +1010,10 @@ body {
   margin-top: 5rem;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mt-\[70px\] {
   margin-top: 70px;
 }
@@ -1042,10 +1044,6 @@ body {
 
 .h-\[70px\] {
   height: 70px;
-}
-
-.h-full {
-  height: 100%;
 }
 
 .w-\[121px\] {
@@ -1139,6 +1137,10 @@ body {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .gap-x-2 {
@@ -1253,10 +1255,6 @@ body {
   line-height: 2rem;
 }
 
-.text-\[10px\] {
-  font-size: 10px;
-}
-
 .text-\[12px\] {
   font-size: 12px;
 }
@@ -1269,6 +1267,10 @@ body {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.font-\[600\] {
+  font-weight: 600;
 }
 
 .font-bold {
@@ -1429,10 +1431,6 @@ body {
     flex-wrap: wrap;
   }
 
-  .md\:gap-1 {
-    gap: 0.25rem;
-  }
-
   .md\:gap-10 {
     gap: 2.5rem;
   }
@@ -1493,6 +1491,10 @@ body {
 
   .lg\:w-auto {
     width: auto;
+  }
+
+  .lg\:text-center {
+    text-align: center;
   }
 
   .lg\:text-\[16px\] {
