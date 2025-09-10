@@ -20,6 +20,14 @@ window.addEventListener("load", () => {
   const capture = document.querySelector("#capture")
   const formNextBtn = document.querySelector(".form-next-btn")
   const formPrevBtn = document.querySelector(".form-prev-btn")
+  const brandLinkMiele = document.querySelector(".brand-link-miele")
+  const brandLinkBertazzoni = document.querySelector(".brand-link-bertazzoni")
+  const brandLinkWhirlpool = document.querySelector(".brand-link-whirlpool")
+  const brandLinkKe = document.querySelector(".brand-link-ke")
+  let brandLinkAry = [
+    { miele: false, whirlpool: false, bertazzoni: false, ke: false },
+  ]
+  let formData
 
   // 限制尺寸輸入框只能輸入數字
   const dimensionInputs = document.querySelectorAll("#q1-4, #q1-5, #q1-6")
@@ -30,7 +38,7 @@ window.addEventListener("load", () => {
     })
   })
 
-  const blandSwiperInstance = new Swiper(".bland-swiper", {
+  const brandSwiperInstance = new Swiper(".brand-swiper", {
     slidesPerView: 1,
     spaceBetween: 20,
     // Responsive breakpoints
@@ -122,8 +130,8 @@ window.addEventListener("load", () => {
   gsap.to(".dishwasher", {
     opacity: 1,
     y: 0,
-    duration: 0.6,
-    stagger: 0.3, // 每個間隔 0.3 秒進場
+    duration: 1,
+    stagger: 0.5, // 每個間隔 0.3 秒進場
     ease: "power2.out",
   })
 
@@ -180,14 +188,17 @@ window.addEventListener("load", () => {
       data[`q${i}`] = selections
     }
 
+    console.log("擷取到的問卷資料:", data)
     return data
   }
+
   // Quiz logic
   const questions = [
     document.getElementById("q1"),
     document.getElementById("q2"),
     document.getElementById("q3"),
     document.getElementById("q4"),
+    document.getElementById("answer"),
   ]
   const totalQuestions = questions.length
   let currentQuestionIndex = 0 // 0-based index
@@ -206,10 +217,53 @@ window.addEventListener("load", () => {
     formPrevBtn.classList.toggle("hidden", currentQuestionIndex === 0)
 
     if (currentQuestionIndex === totalQuestions - 1) {
-      formNextBtn.textContent = "下載"
+      formNextBtn.textContent = "下載問卷"
     } else {
       formNextBtn.textContent = "下一題"
     }
+
+    formData = getCaptureData()
+
+    if (
+      formData.q1.dimensions.height >= 76 ||
+      formData.q2.includes("有220V插座") ||
+      formData.q4.includes("4–6萬（中高階型）") ||
+      formData.q4.includes("6萬以上（高規機型／崁入式）") ||
+      formData.q4.includes("依功能為主，無預算限制")
+    ) {
+      brandLinkAry.miele = true
+      brandLinkAry.bertazzoni = true
+    } else {
+      brandLinkAry.miele = false
+      brandLinkAry.bertazzoni = false
+    }
+
+    if (
+      (formData.q1.dimensions.height > 0 &&
+        formData.q1.dimensions.height < 76) ||
+      formData.q2.includes("有110V插座") ||
+      formData.q4.includes("2萬以下（桌上型為主）") ||
+      formData.q4.includes("2–4萬（多功能入門款）")
+    ) {
+      brandLinkAry.whirlpool = true
+      brandLinkAry.ke = true
+    } else {
+      brandLinkAry.whirlpool = false
+      brandLinkAry.ke = false
+    }
+
+    brandLinkAry.miele
+      ? brandLinkMiele.classList.remove("hidden")
+      : brandLinkMiele.classList.add("hidden")
+    brandLinkAry.bertazzoni
+      ? brandLinkBertazzoni.classList.remove("hidden")
+      : brandLinkBertazzoni.classList.add("hidden")
+    brandLinkAry.whirlpool
+      ? brandLinkWhirlpool.classList.remove("hidden")
+      : brandLinkWhirlpool.classList.add("hidden")
+    brandLinkAry.ke
+      ? brandLinkKe.classList.remove("hidden")
+      : brandLinkKe.classList.add("hidden")
   }
 
   formNextBtn.addEventListener("click", async () => {
@@ -229,7 +283,7 @@ window.addEventListener("load", () => {
       if (navButtonsContainer) navButtonsContainer.style.display = "none"
 
       // 擷取表單資料並在 console 中顯示
-      const formData = getCaptureData()
+      // const formData = getCaptureData()
       // console.log("擷取到的問卷資料:", formData)
 
       try {

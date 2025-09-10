@@ -113,7 +113,9 @@
           </div>
           <div class="relative z-[1] mt-20 flex justify-center gap-4 md:gap-10">
             <div class="dishwasher">
-              <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.3)]">
+              <div
+                class="light-move-1 relative overflow-hidden shadow-[0px_0px_15px_rgba(0,0,0,0.3)]"
+              >
                 <img
                   src="./assets/images/miele-pd.png"
                   width="100%"
@@ -138,7 +140,9 @@
               </div>
             </div>
             <div class="dishwasher">
-              <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.3)]">
+              <div
+                class="light-move-2 relative overflow-hidden shadow-[0px_0px_15px_rgba(0,0,0,0.3)]"
+              >
                 <img
                   src="./assets/images/bertazzoni-pd.png"
                   width="100%"
@@ -163,7 +167,9 @@
               </div>
             </div>
             <div class="dishwasher">
-              <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.3)]">
+              <div
+                class="light-move-3 relative overflow-hidden shadow-[0px_0px_15px_rgba(0,0,0,0.3)]"
+              >
                 <img
                   src="./assets/images/whirlpool-pd.png"
                   width="100%"
@@ -184,7 +190,9 @@
               </div>
             </div>
             <div class="dishwasher">
-              <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.3)]">
+              <div
+                class="light-move-4 relative overflow-hidden shadow-[0px_0px_15px_rgba(0,0,0,0.3)]"
+              >
                 <img
                   src="./assets/images/ke-pd.png"
                   width="100%"
@@ -479,6 +487,56 @@
                   </li>
                 </ul>
               </div>
+              <div id="answer" class="mb-6 hidden text-center">
+                <div class="flex justify-center gap-2 pb-3">
+                  推薦品牌：
+                  <ul class="flex">
+                    <li class="brand-link-miele mr-2 hidden">
+                      <a
+                        href="https://miele.kenk.com.tw/application/dish-washer"
+                        target="_blank"
+                        ><img
+                          class="h-[30px] w-auto"
+                          src="assets/images/miele-logo.png"
+                          alt=""
+                      /></a>
+                    </li>
+                    <li class="brand-link-bertazzoni mr-2 hidden">
+                      <a
+                        href="https://bertazzoni.kenk.com.tw/product.php?lang=tw&tb=1&cid=268"
+                        target="_blank"
+                      >
+                        <img
+                          class="h-[30px] w-auto"
+                          src="assets/images/bertazzoni-logo.png"
+                          alt=""
+                        />
+                      </a>
+                    </li>
+                    <li class="brand-link-whirlpool mr-2 hidden">
+                      <a
+                        href="https://whirlpool.kenk.com.tw/product.php?lang=tw&tb=1&cid=4"
+                        target="_blank"
+                      >
+                        <img
+                          class="h-[30px] w-auto"
+                          src="assets/images/whirlpool-logo.png"
+                          alt=""
+                      /></a>
+                    </li>
+                    <li class="brand-link-ke mr-2 hidden">
+                      <a href="https://kedw.kenk.com.tw/" target="_blank">
+                        <img
+                          class="h-[30px] w-auto"
+                          src="assets/images/ke-logo.png"
+                          alt=""
+                        />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <p data-capture="exclude">點擊品牌前往官網選購！</p>
+              </div>
               <div
                 class="flex items-center justify-center gap-5"
                 data-capture="exclude"
@@ -499,13 +557,18 @@
         <div class="container flex flex-col items-center justify-center">
           <div class="section-title">
             <h2 class="flex justify-center gap-2">
-              <span>世界品牌</span><span>就愛嘉儀</span>
+              <span>世界品牌</span><span>就愛嘉儀家品</span>
             </h2>
           </div>
           <div
             class="flex flex-col items-center gap-10 font-[600] md:flex-row md:flex-wrap"
           >
             <div class="square-card">
+              <img
+                class="absolute left-[50%] top-[45%] z-[1] w-[90%] -translate-x-1/2 -translate-y-1/2 opacity-50"
+                src="assets/images/bubble.png"
+                alt=""
+              />
               <a class="square-card-logo" target="_blank">
                 <img
                   class="h-[30px]"
@@ -517,15 +580,25 @@
                 <span>德國人評選滿意度、推薦度、品質信賴第一洗碗機品牌</span>
               </p>
               <ul class="relative z-[1] flex flex-col gap-4 text-base">
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">特點：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/clean.png" width="15px" alt="" />
+                    特點：
+                  </h3>
                   <p class="text-[#808080]">
                     具備AutoDos智能自動洗劑投放系統、AsianBaskets全方位中式碗籃
                     AutoOpen自動開門烘乾科技
                   </p>
                 </li>
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">適合對象：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/family.png" width="15px" alt="" />
+                    適合對象：
+                  </h3>
                   <p class="text-[#808080]">
                     重視品質、設計與耐用性的高端家庭或品味人士
                   </p>
@@ -539,6 +612,11 @@
               </a>
             </div>
             <div class="square-card">
+              <img
+                class="absolute left-[50%] top-[45%] z-[1] w-[90%] -translate-x-1/2 -translate-y-1/2 opacity-50"
+                src="assets/images/bubble.png"
+                alt=""
+              />
               <a class="square-card-logo" target="_blank">
                 <img
                   class="h-[30px]"
@@ -550,14 +628,24 @@
                 <span>義式工藝演繹廚房中的優雅美學，洗碗機界的義大利超跑</span>
               </p>
               <ul class="relative z-[1] flex flex-col gap-4 text-base">
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">特點：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/clean.png" width="15px" alt="" />
+                    特點：
+                  </h3>
                   <p class="text-[#808080]">
                     源自義式經典設計美學、省時洗程滿足不同需求、雙烘乾模式潔淨節能更省心
                   </p>
                 </li>
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">適合對象：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/family.png" width="15px" alt="" />
+                    適合對象：
+                  </h3>
                   <p class="text-[#808080]">追求美感與性能兼具的廚房風格</p>
                 </li>
               </ul>
@@ -569,6 +657,11 @@
               </a>
             </div>
             <div class="square-card">
+              <img
+                class="absolute left-[50%] top-[45%] z-[1] w-[90%] -translate-x-1/2 -translate-y-1/2 opacity-50"
+                src="assets/images/bubble.png"
+                alt=""
+              />
               <a class="square-card-logo pb-1" target="_blank">
                 <img
                   class="h-[42px]"
@@ -580,14 +673,24 @@
                 <span>美洲市佔率第一洗碗機品牌</span>
               </p>
               <ul class="relative z-[1] flex flex-col gap-4 text-base">
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">特點：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/clean.png" width="15px" alt="" />
+                    特點：
+                  </h3>
                   <p class="text-[#808080]">
                     PowerClean強力清洗、第6感智能感應智能調整洗程、三層碗藍皆可單層清洗
                   </p>
                 </li>
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">適合對象：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/family.png" width="15px" alt="" />
+                    適合對象：
+                  </h3>
                   <p class="text-[#808080]">
                     櫥櫃適用最低77.5公分、重視實用與耐用
                   </p>
@@ -601,6 +704,11 @@
               </a>
             </div>
             <div class="square-card">
+              <img
+                class="absolute left-[50%] top-[45%] z-[1] w-[90%] -translate-x-1/2 -translate-y-1/2 opacity-50"
+                src="assets/images/bubble.png"
+                alt=""
+              />
               <a class="square-card-logo" target="_blank">
                 <img class="h-[30px]" src="assets/images/ke-logo.png" alt="" />
               </a>
@@ -608,14 +716,24 @@
                 <span>是烘碗機，也是洗碗機，專為台灣市場需求量身設計</span>
               </p>
               <ul class="relative z-[1] flex flex-col gap-4 text-base">
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">特點：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/clean.png" width="15px" alt="" />
+                    特點：
+                  </h3>
                   <p class="text-[#808080]">
                     45度獨立熱風烘碗行程、7天換氣儲存可當碗櫃、免改櫃符合台式櫥櫃高度76.5公分
                   </p>
                 </li>
-                <li class="flex">
-                  <h3 class="flex-shrink-0 text-[#0B387B]">適合對象：</h3>
+                <li class="flex items-start">
+                  <h3
+                    class="flex flex-shrink-0 items-center gap-2 text-[#0B387B]"
+                  >
+                    <img src="assets/images/family.png" width="15px" alt="" />
+                    適合對象：
+                  </h3>
                   <p class="text-[#808080]">
                     從烘碗機升級到洗碗機的首選、重視預算及實用性
                   </p>
@@ -647,7 +765,7 @@
           </div>
           <div class="relative">
             <!-- Slider main container -->
-            <div class="swiper bland-swiper">
+            <div class="swiper brand-swiper">
               <!-- Additional required wrapper -->
               <div class="swiper-wrapper">
                 <!-- Slides -->
@@ -714,17 +832,17 @@
             <span>總代理</span>
             <span>嘉儀企業</span>
           </div>
-          <ul class="flex flex-wrap items-center">
-            <li>
-              <span
-                class="whitespace-pre border-r border-white pr-2 tracking-[.178px]"
+          <ul class="flex flex-wrap items-center gap-y-1">
+            <li class="w-full md:mr-1 md:w-auto">
+              <span class="whitespace-pre border-r border-white pr-2"
                 >台北(02)2509-7718</span
               >
-              <span class="whitespace-pre border-white pr-2"
+              <span class="whitespace-pre border-white pr-2 md:border-r"
                 >新竹(03)553-4998</span
               >
             </li>
-            <li>
+
+            <li class="w-full md:w-auto">
               <span class="whitespace-pre border-r border-white pr-2"
                 >台中(04)2381-8388</span
               >

@@ -88,7 +88,7 @@
   .square-card {
     transform: perspective(2500px) rotateY(-90deg);
     backface-visibility: hidden;
-    @apply gradient-gold-1 relative flex h-[400px] w-full flex-col items-center gap-6 rounded-md p-5 md:w-[calc(50%_-_20px)];
+    @apply gradient-gold-1 relative flex h-[500px] w-full flex-col items-center gap-6 rounded-md p-8 md:h-[450px] md:w-[calc(50%_-_20px)];
   }
   .square-card-text {
     @apply relative z-[1] text-center text-[#0b387b];
@@ -162,5 +162,43 @@
   }
   .checkbox-text {
     margin-left: 18px;
+  }
+  .light-move-1::after {
+    /* animation: light-move 2.5s infinite linear; */
+    animation: light-move 2.5s 0.3s infinite linear;
+  }
+  .light-move-2::after {
+    /* animation: light-move 2.5s infinite linear; */
+    animation: light-move 2.5s 0.6s infinite linear;
+  }
+  .light-move-3::after {
+    /* animation: light-move 2.5s infinite linear; */
+    animation: light-move 2.5s 0.9s infinite linear;
+  }
+  .light-move-4::after {
+    /* animation: light-move 2.5s infinite linear; */
+    animation: light-move 2.5s 1.2s infinite linear;
+  }
+
+  div[class^="light-move"]::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0) 60%
+    );
+    transform: translate(-100%, -100%);
+  }
+
+  @keyframes light-move {
+    0% {
+      transform: translate(-100%, -100%);
+    }
+    100% {
+      transform: translate(100%, 100%);
+    }
   }
 }
