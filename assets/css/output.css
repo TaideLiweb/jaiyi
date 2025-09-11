@@ -791,7 +791,7 @@ body {
 @media (min-width: 768px) {
   .square-card {
     height: 450px;
-    width: calc(50% - 20px);
+    width: calc(50% - 10px);
   }
 }
 
@@ -1269,10 +1269,6 @@ div[class^="light-move"]::after {
   gap: 0.25rem;
 }
 
-.gap-10 {
-  gap: 2.5rem;
-}
-
 .gap-14 {
   gap: 3.5rem;
 }
@@ -1394,6 +1390,10 @@ div[class^="light-move"]::after {
 
 .pt-0 {
   padding-top: 0px;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-center {

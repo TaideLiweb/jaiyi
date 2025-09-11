@@ -88,7 +88,7 @@
   .square-card {
     transform: perspective(2500px) rotateY(-90deg);
     backface-visibility: hidden;
-    @apply gradient-gold-1 relative flex h-[500px] w-full flex-col items-center gap-6 rounded-md p-8 md:h-[450px] md:w-[calc(50%_-_20px)];
+    @apply gradient-gold-1 relative flex h-[500px] w-full flex-col items-center gap-6 rounded-md p-8 md:h-[450px] md:w-[calc(50%_-_10px)];
   }
   .square-card-text {
     @apply relative z-[1] text-center text-[#0b387b];

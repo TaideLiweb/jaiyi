@@ -24,9 +24,12 @@ window.addEventListener("load", () => {
   const brandLinkBertazzoni = document.querySelector(".brand-link-bertazzoni")
   const brandLinkWhirlpool = document.querySelector(".brand-link-whirlpool")
   const brandLinkKe = document.querySelector(".brand-link-ke")
-  let brandLinkAry = [
-    { miele: false, whirlpool: false, bertazzoni: false, ke: false },
-  ]
+  let brandLinkObj = {
+    miele: false,
+    whirlpool: false,
+    bertazzoni: false,
+    ke: false,
+  }
   let formData
 
   // 限制尺寸輸入框只能輸入數字
@@ -192,6 +195,73 @@ window.addEventListener("load", () => {
     return data
   }
 
+  const SET_LOW = new Set(["ke", "whirlpool"]) // 76↓ / 110V / ≤ 40,000
+  const SET_HIGH = new Set(["miele", "bertazzoni"]) // 76↑ / 220V /  > 40,000
+  const ALL = new Set(["miele", "whirlpool", "bertazzoni", "ke"])
+
+  function intersect(a, b) {
+    return new Set([...a].filter((x) => b.has(x)))
+  }
+
+  function computeBrandsAND() {
+    let allowed = new Set(ALL)
+
+    brandLinkObj = {
+      miele: false,
+      whirlpool: false,
+      bertazzoni: false,
+      ke: false,
+    }
+
+    // 1) 高度
+    if (
+      formData.q1.dimensions.height > 0 &&
+      formData.q1.dimensions.height <= 76
+    ) {
+      allowed = intersect(allowed, SET_LOW)
+    }
+    if (formData.q1.dimensions.height > 76) {
+      allowed = intersect(allowed, SET_HIGH)
+    }
+
+    // 2) 電壓
+    if (formData.q2.includes("有110V插座")) {
+      allowed = intersect(allowed, SET_LOW)
+    }
+    if (formData.q2.includes("有220V插座")) {
+      allowed = intersect(allowed, SET_HIGH)
+    }
+
+    // 3) 價格
+    const lowPriceSelected =
+      formData.q4.includes("2萬以下（桌上型為主）") ||
+      formData.q4.includes("2–4萬（多功能入門款）") // 如果你的文案只會用其中一種寫法，可刪掉另一個
+
+    const highPriceSelected =
+      formData.q4.includes("4–6萬（中高階型）") ||
+      formData.q4.includes("6萬以上（高規機型／崁入式）") ||
+      formData.q4.includes("依功能為主，無預算限制")
+
+    // 👉 衝突（同時選低價 & 高價）→ 直接全品牌
+    if (lowPriceSelected && highPriceSelected) {
+      brandLinkObj = {
+        miele: true,
+        whirlpool: true,
+        bertazzoni: true,
+        ke: true,
+      }
+      return
+    }
+
+    // 否則維持 AND 交集
+    if (lowPriceSelected) allowed = intersect(allowed, SET_LOW)
+    if (highPriceSelected) allowed = intersect(allowed, SET_HIGH)
+
+    for (const b of allowed) brandLinkObj[b] = true
+
+    return brandLinkObj
+  }
+
   // Quiz logic
   const questions = [
     document.getElementById("q1"),
@@ -201,6 +271,9 @@ window.addEventListener("load", () => {
     document.getElementById("answer"),
   ]
   const totalQuestions = questions.length
+
+  const quizDescription = document.getElementById("quiz-description")
+
   let currentQuestionIndex = 0 // 0-based index
 
   function updateFormView() {
@@ -216,52 +289,33 @@ window.addEventListener("load", () => {
     // 更新按鈕的可見性和文字
     formPrevBtn.classList.toggle("hidden", currentQuestionIndex === 0)
 
+    // 最後一題要做的事
     if (currentQuestionIndex === totalQuestions - 1) {
-      formNextBtn.textContent = "下載問卷"
+      formNextBtn.textContent = "問卷下載"
+      quizDescription.classList.add("hidden")
     } else {
+      quizDescription.classList.remove("hidden")
       formNextBtn.textContent = "下一題"
     }
 
+    console.log("目前在第", currentQuestionIndex + 1, "題")
+
+    // 列出問卷答案
     formData = getCaptureData()
 
-    if (
-      formData.q1.dimensions.height >= 76 ||
-      formData.q2.includes("有220V插座") ||
-      formData.q4.includes("4–6萬（中高階型）") ||
-      formData.q4.includes("6萬以上（高規機型／崁入式）") ||
-      formData.q4.includes("依功能為主，無預算限制")
-    ) {
-      brandLinkAry.miele = true
-      brandLinkAry.bertazzoni = true
-    } else {
-      brandLinkAry.miele = false
-      brandLinkAry.bertazzoni = false
-    }
+    // 整理出現品牌順序
+    computeBrandsAND()
 
-    if (
-      (formData.q1.dimensions.height > 0 &&
-        formData.q1.dimensions.height < 76) ||
-      formData.q2.includes("有110V插座") ||
-      formData.q4.includes("2萬以下（桌上型為主）") ||
-      formData.q4.includes("2–4萬（多功能入門款）")
-    ) {
-      brandLinkAry.whirlpool = true
-      brandLinkAry.ke = true
-    } else {
-      brandLinkAry.whirlpool = false
-      brandLinkAry.ke = false
-    }
-
-    brandLinkAry.miele
+    brandLinkObj.miele
       ? brandLinkMiele.classList.remove("hidden")
       : brandLinkMiele.classList.add("hidden")
-    brandLinkAry.bertazzoni
+    brandLinkObj.bertazzoni
       ? brandLinkBertazzoni.classList.remove("hidden")
       : brandLinkBertazzoni.classList.add("hidden")
-    brandLinkAry.whirlpool
+    brandLinkObj.whirlpool
       ? brandLinkWhirlpool.classList.remove("hidden")
       : brandLinkWhirlpool.classList.add("hidden")
-    brandLinkAry.ke
+    brandLinkObj.ke
       ? brandLinkKe.classList.remove("hidden")
       : brandLinkKe.classList.add("hidden")
   }
@@ -273,7 +327,7 @@ window.addEventListener("load", () => {
     } else {
       // 這是「下載」按鈕的操作
       formNextBtn.disabled = true
-      formNextBtn.textContent = "下載中..."
+      formNextBtn.textContent = "問卷下載中..."
 
       // 暫時顯示所有問題以供截圖
       questions.forEach((q) => q.classList.remove("hidden"))
@@ -287,8 +341,9 @@ window.addEventListener("load", () => {
       // console.log("擷取到的問卷資料:", formData)
 
       try {
+        capture.querySelector("h3").textContent = "問卷結果"
         const result = await snapdom(capture, { scale: 2 })
-        await result.download({ format: "png", filename: "使用空閒與考量" })
+        await result.download({ format: "png", filename: "問卷結果" })
       } catch (error) {
         console.error("Oops, something went wrong!", error)
         alert("圖片截圖失敗，請稍後再試。")
@@ -297,7 +352,8 @@ window.addEventListener("load", () => {
         if (navButtonsContainer) navButtonsContainer.style.display = ""
         updateFormView()
         formNextBtn.disabled = false
-        formNextBtn.textContent = "下載"
+        formNextBtn.textContent = "問卷下載"
+        capture.querySelector("h3").textContent = "品牌推薦與問卷下載"
       }
     }
   })
