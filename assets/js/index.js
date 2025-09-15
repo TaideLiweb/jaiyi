@@ -97,7 +97,7 @@ window.addEventListener("load", () => {
             trigger: el,
             // 用函式值，斷點切換/refresh 時會重新計算
             start: () => (mobile ? "top 50%" : `top ${50 - index * 5}%`),
-            toggleActions: "play none none reverse",
+            // toggleActions: "play none none reverse",
             // markers: true, // 除錯時開，正式環境記得關
             invalidateOnRefresh: true, // 尺寸變更時重新取 start
           },
@@ -111,7 +111,7 @@ window.addEventListener("load", () => {
             trigger: el,
             // 用函式值，斷點切換/refresh 時會重新計算
             start: () => (mobile ? "top 50%" : `top ${40 - index * 5}%`),
-            toggleActions: "play none none reverse",
+            // toggleActions: "play none none reverse",
             // markers: true, // 除錯時開，正式環境記得關
             invalidateOnRefresh: true, // 尺寸變更時重新取 start
           },
