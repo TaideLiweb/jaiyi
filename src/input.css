@@ -118,6 +118,12 @@
   #go-to-top.active {
     @apply pointer-events-auto opacity-100 hover:opacity-90;
   }
+  .brand-link-miele,
+  .brand-link-bertazzoni,
+  .brand-link-whirlpool,
+  .brand-link-ke {
+    @apply flex items-center gap-2;
+  }
   .checkbox-group {
     position: relative;
     display: flex;

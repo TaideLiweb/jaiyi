@@ -11,16 +11,346 @@
 //   }
 // })()
 
+// 定義一個物件，給 v-scope 使用
+window.App = {
+  quizTitle: "品牌推薦與問卷下載",
+  questionCurrentIndex: 1,
+
+  mieleModel: [],
+  bertazzoniModel: [],
+  whirlpoolModel: [],
+  keModel: [],
+
+  showQuestion: "",
+
+  q1Answers: "",
+  q2Answers: "",
+  q3Answers: "",
+  q4Answers: "",
+
+  q1Options: [
+    {
+      text: "廚下型（需嵌入櫥櫃，搭配廚房系列門板）",
+      value: "builtIn",
+    },
+    {
+      text: "獨立式（獨立擺放）",
+      value: "freestanding",
+    },
+    {
+      text: "桌上型（放檯面）",
+      value: "countertop",
+    },
+  ],
+  q2Options: [],
+  q3Options: [],
+  q4Options: [],
+
+  dishwashers: {
+    builtIn: [
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G7964C SCVi",
+      },
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G7364C SCVi",
+      },
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G5264C SCVi",
+      },
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G7314C SCi",
+      },
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G7114C SCi",
+      },
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G7104C SCi",
+      },
+      {
+        voltage: "220V",
+        height: "80.5-87",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G5214C SCi",
+      },
+      {
+        voltage: "220V",
+        height: "82-87",
+        budgetNote: "",
+        priceRange: "4-6萬",
+        brand: "BERTAZZONI",
+        model: "DW603SIDV-60",
+      },
+      {
+        voltage: "110V",
+        height: "76.5-82.5",
+        budgetNote: "",
+        priceRange: "3-4萬",
+        brand: "KE",
+        model: "KDW-756Si",
+      },
+      {
+        voltage: "110V",
+        height: "76.5-82.5",
+        budgetNote: "",
+        priceRange: "3-4萬",
+        brand: "KE",
+        model: "KDW-856i",
+      },
+    ],
+    freestanding: [
+      {
+        voltage: "220V",
+        height: "84.5-91",
+        budgetNote: "無預算限制",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G5214C SC",
+      },
+      {
+        voltage: "220V",
+        height: "85-87",
+        budgetNote: "",
+        priceRange: "4-6萬",
+        brand: "BERTAZZONI",
+        model: "DW6083FSBC-60",
+      },
+      {
+        voltage: "220V",
+        height: "85",
+        budgetNote: "",
+        priceRange: "4-6萬",
+        brand: "Whirlpool",
+        model: "WFO3T123PLXD",
+      },
+      {
+        voltage: "110V",
+        height: "84.5-91",
+        budgetNote: "",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G7101C SC",
+      },
+      {
+        voltage: "110V",
+        height: "84.5-91",
+        budgetNote: "",
+        priceRange: "6萬以上",
+        brand: "Miele",
+        model: "G5001 SC",
+      },
+      {
+        voltage: "110V",
+        height: "80.5",
+        budgetNote: "",
+        priceRange: "3-4萬",
+        brand: "Whirlpool",
+        model: "WDFS3R5PIXTW",
+      },
+      {
+        voltage: "110V",
+        height: "79.5-82.5",
+        budgetNote: "",
+        priceRange: "2-3萬",
+        brand: "KE",
+        model: "KDW-656FW",
+      },
+    ],
+    countertop: [
+      {
+        voltage: "110V",
+        height: "47.5",
+        budgetNote: "",
+        function: "獨立烘乾",
+        priceRange: "1-2萬",
+        brand: "KE",
+        model: "KDW-236W",
+      },
+      {
+        voltage: "110V",
+        height: "47.5",
+        budgetNote: "",
+        function: "自動開門烘乾",
+        priceRange: "1-2萬",
+        brand: "KE",
+        model: "KDW-156W",
+      },
+    ],
+  },
+
+  handleOptionClick(question, value) {
+    this[question] = value
+    this.handleDynamicOption()
+  },
+  handleDynamicOption() {
+    this.q2Options = []
+    this.q3Options = []
+    this.q4Options = []
+
+    // 根據 q1Answers 動態產生 q2Options
+    if (this.q1Answers === "countertop") {
+      this.dishwashers[this.q1Answers].forEach((item) => {
+        this.q2Options.push(item.function)
+      })
+    } else {
+      this.dishwashers[this.q1Answers].forEach((item) => {
+        this.q2Options.push(item.voltage)
+      })
+    }
+
+    // 根據 q2Answers 動態產生 q3Options
+    this.dishwashers[this.q1Answers].filter((item) => {
+      if (item.voltage === this.q2Answers) {
+        this.q3Options.push(item.height)
+      }
+    })
+
+    // 根據 q2Answers 動態產生 q3Options
+    this.dishwashers[this.q1Answers].filter((item) => {
+      if (item.voltage === this.q2Answers && item.height === this.q3Answers) {
+        this.q4Options.push(item.priceRange)
+      }
+    })
+
+    if (this.q1Answers === "countertop") {
+      this.q2Options = [...new Set(this.q2Options), "皆可"]
+    } else {
+      this.q2Options = [...new Set(this.q2Options)]
+      this.q2Options = this.q2Options.sort()
+    }
+    this.q3Options = [...new Set(this.q3Options)]
+    this.q3Options = this.q3Options.sort()
+    this.q4Options = [...new Set(this.q4Options), "無預算限制"]
+    this.q4Options = this.q4Options.sort()
+  },
+  handleCheckAnswer() {
+    const mapping = {
+      q2Answers: this.q2Options,
+      q3Answers: this.q3Options,
+      q4Answers: this.q4Options,
+    }
+
+    for (const key in mapping) {
+      if (!mapping[key].includes(this[key])) {
+        this[key] = ""
+      }
+    }
+  },
+  handleNextBtnClick() {
+    this.handleCheckAnswer()
+    if (this.questionCurrentIndex < 5) {
+      this.questionCurrentIndex += 1
+    }
+
+    if (this.questionCurrentIndex === 3 && this.q1Answers === "countertop") {
+      this.questionCurrentIndex = 5
+    }
+
+    if (this.questionCurrentIndex === 5) {
+      this.handleResult()
+    }
+  },
+  handlePrevBtnClick() {
+    this.handleCheckAnswer()
+    if (this.questionCurrentIndex === 5 && this.q1Answers === "countertop") {
+      this.questionCurrentIndex = 2
+      return
+    }
+    if (this.questionCurrentIndex > 1) {
+      this.questionCurrentIndex -= 1
+    }
+  },
+
+  handleResult() {
+    this.mieleModel = []
+    this.bertazzoniModel = []
+    this.whirlpoolModel = []
+    this.keModel = []
+
+    console.log(this.q1Answers, this.q2Answers, this.q3Answers, this.q4Answers)
+
+    // 處理答案邏輯
+    const resultAnswers = this.dishwashers[this.q1Answers].filter((item) => {
+      if (this.q1Answers === "countertop") {
+        return item.function === this.q2Answers || this.q2Answers === "皆可"
+      } else {
+        return (
+          item.voltage === this.q2Answers &&
+          item.height === this.q3Answers &&
+          (item.priceRange === this.q4Answers ||
+            this.q4Answers === "無預算限制")
+        )
+      }
+    })
+
+    resultAnswers.forEach((item) => {
+      if (item.brand === "Miele") {
+        this.mieleModel.push(item)
+      } else if (item.brand === "BERTAZZONI") {
+        this.bertazzoniModel.push(item)
+      } else if (item.brand === "Whirlpool") {
+        this.whirlpoolModel.push(item)
+      } else if (item.brand === "KE") {
+        this.keModel.push(item)
+      }
+    })
+  },
+
+  async screenShot() {
+    this.quizTitle = "問卷結果"
+    if (this.q1Answers === "countertop") {
+      this.showQuestion = "countertop"
+    } else {
+      this.showQuestion = "others"
+    }
+    await this.$nextTick()
+    const result = await snapdom(capture, { scale: 2 })
+    await result.download({ format: "png", filename: "問卷結果" })
+
+    this.showQuestion = ""
+    this.quizTitle = "品牌推薦與問卷下載"
+  },
+}
+
 window.addEventListener("load", () => {
   // --- 1. 變數宣告與常數 ---
 
   // DOM 元素
   const goToTop = document.getElementById("go-to-top")
   const quizPosition = document.querySelector("#quiz-position")
-  const capture = document.querySelector("#capture")
+  // const capture = document.querySelector("#capture")
   const formNextBtn = document.querySelector(".form-next-btn")
-  const formPrevBtn = document.querySelector(".form-prev-btn")
-  const quizDescription = document.getElementById("quiz-description")
   const topTitle = document.querySelector(".top-title")
 
   // 動畫相關元素
@@ -28,297 +358,7 @@ window.addEventListener("load", () => {
   const squareCards = document.querySelectorAll(".square-card")
   const bgDecorate = document.querySelectorAll(".bg-decorate")
 
-  // 問卷相關元素
-  const questions = [
-    document.getElementById("q1"),
-    document.getElementById("q2"),
-    document.getElementById("q3"),
-    document.getElementById("q4"),
-    document.getElementById("answer"),
-  ]
-  const captureCheckbox = document.querySelectorAll("#capture .checkbox-group")
-  const option110v = document.querySelector(".option110v")
-  const option220v = document.querySelector(".option220v")
-  const brandLinkMiele = document.querySelector(".brand-link-miele")
-  const brandLinkBertazzoni = document.querySelector(".brand-link-bertazzoni")
-  const brandLinkWhirlpool = document.querySelector(".brand-link-whirlpool")
-  const brandLinkKe = document.querySelector(".brand-link-ke")
-
-  // 狀態與資料
-  let formData
-  let currentQuestionIndex = 0 // 0-based index
-  let tableTypeSwitch = false
-  const totalQuestions = questions.length
-  const productSize = {
-    cabinet: ["76.5–82.5 cm", "80.5–87 cm", "82–87 cm"],
-    single: [
-      "76.5–82.5 cm",
-      "77.5–82.5 cm",
-      "82–85 cm",
-      "82–87 cm",
-      "82–91 cm",
-    ],
-  }
-
   // --- 2. 輔助函式 ---
-
-  // 擷取 #capture 區塊內的表單資料
-  function getCaptureData() {
-    const captureEl = document.querySelector("#capture")
-    if (!captureEl) return null
-
-    const data = {}
-
-    for (let i = 1; i <= 4; i++) {
-      const checkedRadio = captureEl.querySelector(
-        `#q${i} input[type="radio"]:checked`,
-      )
-      let selection = ""
-      if (checkedRadio) {
-        const label = captureEl.querySelector(`label[for="${checkedRadio.id}"]`)
-        if (label) {
-          const textSpan = label.querySelector(".checkbox-text")
-          selection = textSpan ? textSpan.textContent.trim() : ""
-        }
-      }
-      data[`q${i}`] = selection
-    }
-
-    return data
-  }
-
-  // 檢查目前問題是否已回答
-  function isCurrentQuestionAnswered() {
-    // q1, q2, q3, q4 的索引分別是 0, 1, 2, 3
-    if (currentQuestionIndex >= 0 && currentQuestionIndex <= 3) {
-      const questionKey = `q${currentQuestionIndex + 1}`
-      // 如果 formData 存在且對應的 key 有值，代表問題已回答
-      return !!(formData && formData[questionKey])
-    }
-    // 對於答案頁面（索引 4）或任何其他情況，視為有效
-    return true
-  }
-
-  // 更新 Q2 的選項
-  function updateQ2Options(optionsArray) {
-    optionsArray.forEach((size, index) => {
-      let str = `
-        <li class="flex-shrink-0">
-          <label class="checkbox-group" for="q2-${index + 1}">
-            <input
-              class="checkbox-input"
-              id="q2-${index + 1}"
-              name="q2"
-              type="radio"
-              ${formData?.q2 === size ? "checked" : ""}
-            />
-            <span class="checkbox-span"></span>
-            <span class="checkbox-text">${size}</span>
-          </label>
-        </li>
-      `
-      document.querySelector("#q2 ul").insertAdjacentHTML("beforeend", str)
-    })
-    // 為動態產生的選項加上事件監聽
-    document.querySelectorAll("#q2 .checkbox-group").forEach((group) => {
-      group.addEventListener("change", () => {
-        formData = getCaptureData()
-        console.log("擷取到的問卷資料:", formData)
-        formNextBtn.disabled = !isCurrentQuestionAnswered()
-      })
-    })
-  }
-
-  // 更新答案頁面的品牌推薦
-  function updateAnswer() {
-    // 重置
-    brandLinkMiele.style.display = "none"
-    brandLinkBertazzoni.style.display = "none"
-    brandLinkWhirlpool.style.display = "none"
-    brandLinkKe.style.display = "none"
-    // 第一組
-    if (
-      formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-      formData?.q2 === "80.5–87 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "6 萬以上" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkMiele.style.display = "flex"
-      document.querySelector(".brand-link-miele p").innerHTML =
-        `<span>G7964C-SCVi、</span><span>G7364C-SCVi、</span><span>G5264C-SCVi、</span><span>G7314C-SCi、</span><span>G7114C-SCi、</span><span>G7104C-SCi、</span><span>G5214C-SCi</span>`
-    }
-    // 第二組
-    if (
-      formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-      formData?.q2 === "82–87 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "4–6 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkBertazzoni.style.display = "flex"
-      document.querySelector(".brand-link-bertazzoni p").innerHTML =
-        `<span>DW6O3SIDV-60</span>`
-    }
-    // 第三組
-    if (
-      formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-      formData?.q2 === "76.5–82.5 cm" &&
-      formData?.q3 === "有110V插座" &&
-      (formData?.q4 === "3–4 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkKe.style.display = "flex"
-      document.querySelector(".brand-link-ke p").innerHTML =
-        `<span>KDW-756Si、</span><span>KDW-856i</span>`
-    }
-    // 第四組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "82–91 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "6 萬以上" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkMiele.style.display = "flex"
-      document.querySelector(".brand-link-miele p").innerHTML =
-        `<span>G7101C-SC、</span><span>G5214C-SC、</span><span>G5001-SC</span>`
-    }
-    // 第五組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "82–87 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "4–6 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkBertazzoni.style.display = "flex"
-      document.querySelector(".brand-link-bertazzoni p").innerHTML =
-        `<span>DW6083FSBC-60</span>`
-    }
-    // 第六組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "82–85 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "4–6 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkWhirlpool.style.display = "flex"
-      document.querySelector(".brand-link-whirlpool p").innerHTML =
-        `<span>WFO3T123PLXD</span>`
-    }
-    // 第七組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "77.5–82.5 cm" &&
-      formData?.q3 === "有110V插座" &&
-      (formData?.q4 === "3–4 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkWhirlpool.style.display = "flex"
-      document.querySelector(".brand-link-whirlpool p").innerHTML =
-        `<span>WDFS3R5PIXTW</span>`
-    }
-    // 第八組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "76.5–82.5 cm" &&
-      formData?.q3 === "有110V插座" &&
-      (formData?.q4 === "2–3 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkKe.style.display = "flex"
-      document.querySelector(".brand-link-ke p").innerHTML =
-        `<span>KDW-656FW</span>`
-    }
-    // 第九組
-    if (formData?.q1 === "桌上型（放檯面）") {
-      brandLinkKe.style.display = "flex"
-      document.querySelector(".brand-link-ke p").innerHTML =
-        `<span>KDW-236W</span>`
-    }
-  }
-
-  // 更新問卷畫面與邏輯
-  function updateFormView() {
-    console.log("目前在第", currentQuestionIndex + 1, "題")
-
-    // 隱藏所有問題，並顯示當前的問題
-    questions.forEach((q, index) => {
-      if (index === currentQuestionIndex) {
-        q.classList.remove("hidden")
-      } else {
-        q.classList.add("hidden")
-      }
-    })
-
-    // 更新按鈕的可見性和文字
-    formPrevBtn.classList.toggle("hidden", currentQuestionIndex === 0)
-
-    // 根據 q1 的答案，決定 q2 的選項
-    if (formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）") {
-      document.querySelector("#q2 ul").innerHTML = ""
-      updateQ2Options(productSize.cabinet)
-    } else {
-      document.querySelector("#q2 ul").innerHTML = ""
-      updateQ2Options(productSize.single)
-    }
-
-    // 根據 q2 的答案，決定電壓選項
-    if (formData?.q2 === "76.5–82.5 cm" || formData?.q2 === "77.5–82.5 cm") {
-      option110v.classList.remove("disabled")
-      option220v.classList.add("disabled")
-      // 避免切換選項時，錯誤的選項還是被選取
-      option220v.querySelector("input").checked = false
-    } else {
-      option110v.classList.add("disabled")
-      option220v.classList.remove("disabled")
-      // 避免切換選項時，錯誤的選項還是被選取
-      option110v.querySelector("input").checked = false
-    }
-    // 根據 q2 的答案，決定價格
-    function resetQ4(className) {
-      document.querySelectorAll("#q4 .checkbox-group").forEach((el) => {
-        if (
-          el.classList.contains(className) ||
-          el.classList.contains("optionNoLimit")
-        ) {
-          el.classList.remove("disabled")
-          return
-        }
-        el.classList.add("disabled")
-        el.querySelector("input").checked = false
-      })
-    }
-    // 2-3 萬以上選項
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "76.5–82.5 cm"
-    ) {
-      resetQ4("option2-3w")
-    }
-    // 3-4 萬以上選項
-    if (
-      (formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-        formData?.q2 === "76.5–82.5 cm") ||
-      formData?.q2 === "77.5–82.5 cm"
-    ) {
-      resetQ4("option3-4w")
-    }
-    // 4-6 萬以上選項
-    if (formData?.q2 === "82–87 cm" || formData?.q2 === "82–85 cm") {
-      resetQ4("option4-6w")
-    }
-    // 6 萬以上選項
-    if (formData?.q2 === "80.5–87 cm" || formData?.q2 === "82–91 cm") {
-      resetQ4("option6wUp")
-    }
-
-    // 最後一題要做的事
-    if (currentQuestionIndex === totalQuestions - 1) {
-      formNextBtn.textContent = "問卷下載"
-      quizDescription.classList.add("hidden")
-      formNextBtn.disabled = false
-      updateAnswer()
-    } else {
-      quizDescription.classList.remove("hidden")
-      formNextBtn.textContent = "下一題"
-      formNextBtn.disabled = !isCurrentQuestionAnswered()
-    }
-  }
 
   // 處理視窗大小變更
   const resizeHandle = () => {
@@ -427,321 +467,6 @@ window.addEventListener("load", () => {
     })
   })
 
-  // 擷取 #capture 區塊內的表單資料
-  function getCaptureData() {
-    const captureEl = document.querySelector("#capture")
-    if (!captureEl) return null
-
-    const data = {}
-
-    for (let i = 1; i <= 4; i++) {
-      const checkedRadio = captureEl.querySelector(
-        `#q${i} input[type="radio"]:checked`,
-      )
-      let selection = ""
-      if (checkedRadio) {
-        const label = captureEl.querySelector(`label[for="${checkedRadio.id}"]`)
-        if (label) {
-          const textSpan = label.querySelector(".checkbox-text")
-          selection = textSpan ? textSpan.textContent.trim() : ""
-        }
-      }
-      data[`q${i}`] = selection
-    }
-
-    return data
-  }
-
-  captureCheckbox.forEach((group) => {
-    group.addEventListener("change", () => {
-      formData = getCaptureData()
-      console.log("擷取到的問卷資料:", formData)
-      formNextBtn.disabled = !isCurrentQuestionAnswered()
-    })
-  })
-
-  function isCurrentQuestionAnswered() {
-    // q1, q2, q3, q4 的索引分別是 0, 1, 2, 3
-    if (currentQuestionIndex >= 0 && currentQuestionIndex <= 3) {
-      const questionKey = `q${currentQuestionIndex + 1}`
-      // 如果 formData 存在且對應的 key 有值，代表問題已回答
-      return !!(formData && formData[questionKey])
-    }
-    // 對於答案頁面（索引 4）或任何其他情況，視為有效
-    return true
-  }
-
-  function updateQ2Options(optionsArray) {
-    optionsArray.forEach((size, index) => {
-      let str = `
-        <li class="flex-shrink-0">
-          <label class="checkbox-group" for="q2-${index + 1}">
-            <input
-              class="checkbox-input"
-              id="q2-${index + 1}"
-              name="q2"
-              type="radio"
-              ${formData?.q2 === size ? "checked" : ""}
-            />
-            <span class="checkbox-span"></span>
-            <span class="checkbox-text">${size}</span>
-          </label>
-        </li>
-      `
-      document.querySelector("#q2 ul").insertAdjacentHTML("beforeend", str)
-    })
-    document.querySelectorAll("#q2 .checkbox-group").forEach((group) => {
-      group.addEventListener("change", () => {
-        formData = getCaptureData()
-        console.log("擷取到的問卷資料:", formData)
-        formNextBtn.disabled = !isCurrentQuestionAnswered()
-      })
-    })
-  }
-
-  function updateAnswer() {
-    // 重置
-    brandLinkMiele.style.display = "none"
-    brandLinkBertazzoni.style.display = "none"
-    brandLinkWhirlpool.style.display = "none"
-    brandLinkKe.style.display = "none"
-    // 第一組
-    if (
-      formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-      formData?.q2 === "80.5–87 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "6 萬以上" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkMiele.style.display = "flex"
-      document.querySelector(".brand-link-miele p").innerHTML =
-        `<span>G7964C-SCVi、</span><span>G7364C-SCVi、</span><span>G5264C-SCVi、</span><span>G7314C-SCi、</span><span>G7114C-SCi、</span><span>G7104C-SCi、</span><span>G5214C-SCi</span>`
-    }
-    // 第二組
-    if (
-      formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-      formData?.q2 === "82–87 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "4–6 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkBertazzoni.style.display = "flex"
-      document.querySelector(".brand-link-bertazzoni p").innerHTML =
-        `<span>DW6O3SIDV-60</span>`
-    }
-    // 第三組
-    if (
-      formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-      formData?.q2 === "76.5–82.5 cm" &&
-      formData?.q3 === "有110V插座" &&
-      (formData?.q4 === "3–4 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkKe.style.display = "flex"
-      document.querySelector(".brand-link-ke p").innerHTML =
-        `<span>KDW-756Si、</span><span>KDW-856i</span>`
-    }
-    // 第四組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "82–91 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "6 萬以上" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkMiele.style.display = "flex"
-      document.querySelector(".brand-link-miele p").innerHTML =
-        `<span>G7101C-SC、</span><span>G5214C-SC、</span><span>G5001-SC</span>`
-    }
-    // 第五組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "82–87 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "4–6 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkBertazzoni.style.display = "flex"
-      document.querySelector(".brand-link-bertazzoni p").innerHTML =
-        `<span>DW6083FSBC-60</span>`
-    }
-    // 第六組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "82–85 cm" &&
-      formData?.q3 === "有220V插座" &&
-      (formData?.q4 === "4–6 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkWhirlpool.style.display = "flex"
-      document.querySelector(".brand-link-whirlpool p").innerHTML =
-        `<span>WFO3T123PLXD</span>`
-    }
-    // 第七組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "77.5–82.5 cm" &&
-      formData?.q3 === "有110V插座" &&
-      (formData?.q4 === "3–4 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkWhirlpool.style.display = "flex"
-      document.querySelector(".brand-link-whirlpool p").innerHTML =
-        `<span>WDFS3R5PIXTW</span>`
-    }
-    // 第八組
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "76.5–82.5 cm" &&
-      formData?.q3 === "有110V插座" &&
-      (formData?.q4 === "2–3 萬" || formData?.q4 === "沒有預算限制")
-    ) {
-      brandLinkKe.style.display = "flex"
-      document.querySelector(".brand-link-ke p").innerHTML =
-        `<span>KDW-656FW</span>`
-    }
-    // 第九組
-    if (formData?.q1 === "桌上型（放檯面）") {
-      brandLinkKe.style.display = "flex"
-      document.querySelector(".brand-link-ke p").innerHTML =
-        `<span>KDW-236W</span>`
-    }
-  }
-
-  function updateFormView() {
-    console.log("目前在第", currentQuestionIndex + 1, "題")
-
-    // 隱藏所有問題，並顯示當前的問題
-    questions.forEach((q, index) => {
-      if (index === currentQuestionIndex) {
-        q.classList.remove("hidden")
-      } else {
-        q.classList.add("hidden")
-      }
-    })
-
-    // 更新按鈕的可見性和文字
-    formPrevBtn.classList.toggle("hidden", currentQuestionIndex === 0)
-
-    // 根據 q1 的答案，決定 q2 的選項
-    if (formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）") {
-      document.querySelector("#q2 ul").innerHTML = ""
-      updateQ2Options(productSize.cabinet)
-    } else {
-      document.querySelector("#q2 ul").innerHTML = ""
-      updateQ2Options(productSize.single)
-    }
-
-    // 根據 q2 的答案，決定電壓選項
-    if (formData?.q2 === "76.5–82.5 cm" || formData?.q2 === "77.5–82.5 cm") {
-      option110v.classList.remove("disabled")
-      option220v.classList.add("disabled")
-      // 避免切換選項時，錯誤的選項還是被選取
-      option220v.querySelector("input").checked = false
-    } else {
-      option110v.classList.add("disabled")
-      option220v.classList.remove("disabled")
-      // 避免切換選項時，錯誤的選項還是被選取
-      option110v.querySelector("input").checked = false
-    }
-    // 根據 q2 的答案，決定價格
-    function resetQ4(className) {
-      document.querySelectorAll("#q4 .checkbox-group").forEach((el) => {
-        if (
-          el.classList.contains(className) ||
-          el.classList.contains("optionNoLimit")
-        ) {
-          el.classList.remove("disabled")
-          return
-        }
-        el.classList.add("disabled")
-        el.querySelector("input").checked = false
-      })
-    }
-    // 2-3 萬以上選項
-    if (
-      formData?.q1 === "獨立式（獨立擺放）" &&
-      formData?.q2 === "76.5–82.5 cm"
-    ) {
-      resetQ4("option2-3w")
-    }
-    // 3-4 萬以上選項
-    if (
-      (formData?.q1 === "廚下型（需嵌入櫥櫃，搭配廚房系列門板）" &&
-        formData?.q2 === "76.5–82.5 cm") ||
-      formData?.q2 === "77.5–82.5 cm"
-    ) {
-      resetQ4("option3-4w")
-    }
-    // 4-6 萬以上選項
-    if (formData?.q2 === "82–87 cm" || formData?.q2 === "82–85 cm") {
-      resetQ4("option4-6w")
-    }
-    // 6 萬以上選項
-    if (formData?.q2 === "80.5–87 cm" || formData?.q2 === "82–91 cm") {
-      resetQ4("option6wUp")
-    }
-
-    // 最後一題要做的事
-    if (currentQuestionIndex === totalQuestions - 1) {
-      formNextBtn.textContent = "問卷下載"
-      quizDescription.classList.add("hidden")
-      formNextBtn.disabled = false
-      updateAnswer()
-    } else {
-      quizDescription.classList.remove("hidden")
-      formNextBtn.textContent = "下一題"
-      formNextBtn.disabled = !isCurrentQuestionAnswered()
-    }
-  }
-
-  formNextBtn.addEventListener("click", async () => {
-    formData = getCaptureData()
-    console.log("擷取到的問卷資料:", formData)
-    if (formData?.q1 === "桌上型（放檯面）" && tableTypeSwitch === false) {
-      currentQuestionIndex = 3
-      tableTypeSwitch = true
-    }
-
-    if (currentQuestionIndex < totalQuestions - 1) {
-      currentQuestionIndex++
-      updateFormView()
-    } else {
-      // 這是「下載」按鈕的操作
-      formNextBtn.disabled = true
-      formNextBtn.textContent = "問卷下載中..."
-
-      // 暫時顯示所有問題以供截圖
-      questions.forEach((q) => q.classList.remove("hidden"))
-      const navButtonsContainer = capture.querySelector(
-        '[data-capture="exclude"]',
-      )
-      if (navButtonsContainer) navButtonsContainer.style.display = "none"
-
-      try {
-        capture.querySelector("h3").textContent = "問卷結果"
-        const result = await snapdom(capture, { scale: 2 })
-        await result.download({ format: "png", filename: "問卷結果" })
-      } catch (error) {
-        console.error("Oops, something went wrong!", error)
-        alert("圖片截圖失敗，請稍後再試。")
-      } finally {
-        // 還原畫面
-        if (navButtonsContainer) navButtonsContainer.style.display = ""
-        updateFormView()
-        formNextBtn.disabled = false
-        formNextBtn.textContent = "問卷下載"
-        capture.querySelector("h3").textContent = "品牌推薦與問卷下載"
-      }
-    }
-  })
-
-  formPrevBtn.addEventListener("click", () => {
-    if (formData?.q1 === "桌上型（放檯面）") {
-      currentQuestionIndex = 0
-      updateFormView()
-      tableTypeSwitch = false
-      return
-    }
-    if (currentQuestionIndex > 0) {
-      currentQuestionIndex--
-      updateFormView()
-    }
-  })
-
   // 顯示按鈕：當滾動超過 300px
   window.addEventListener("scroll", () => {
     if (window.scrollY > 200) {
@@ -758,12 +483,6 @@ window.addEventListener("load", () => {
 
   // 視窗大小變更
   window.addEventListener("resize", resizeHandle)
-
-  // --- 5. 初始執行 ---
-
-  // 初始化問卷畫面
-  updateFormView()
-  formNextBtn.disabled = !isCurrentQuestionAnswered()
 
   // 執行一次 resize 處理
   resizeHandle()

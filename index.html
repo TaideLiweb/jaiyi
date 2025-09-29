@@ -288,199 +288,152 @@
           <div
             class="w-full bg-white font-[600] text-[#382C27] lg:text-lg"
             id="capture"
+            v-scope="App"
           >
             <h3
               class="gradient-white-blue-2 py-4 text-center text-xl text-white"
             >
-              品牌推薦與問卷下載
+              {{quizTitle}}
             </h3>
-            <p id="quiz-description" class="p-6">
+            <p
+              id="quiz-description"
+              class="p-6"
+              v-if="questionCurrentIndex !== 5"
+            >
               「每個家庭的廚房格局、生活習慣都不同，挑選洗碗機前，先了解自己的需求很重要。我們為你準備了簡單問題，3分鐘就能幫助你快速判斷，選擇命定機型!
             </p>
             <div class="p-6">
-              <div id="q1" class="mb-6">
+              <div
+                id="q1"
+                class="mb-6"
+                :style="{display: questionCurrentIndex === 1 || showQuestion === 'countertop'||  showQuestion === 'others' ? 'block' : 'none'}"
+              >
                 <h4 class="mb-2">Q1.您打算安裝的洗碗機類型？</h4>
                 <ul class="mb-2 flex flex-wrap gap-x-2">
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group" for="q1-1">
+                  <li
+                    class="flex-shrink-0"
+                    v-for="(options, index) in q1Options"
+                  >
+                    <label
+                      class="checkbox-group"
+                      :for="'q1-' + index"
+                      @click="handleOptionClick('q1Answers', options.value)"
+                    >
                       <input
                         class="checkbox-input"
-                        id="q1-1"
+                        :id="'q1-' + index"
                         name="q1"
                         type="radio"
+                        :checked="q1Answers === options.value"
                       />
                       <span class="checkbox-span"></span>
-                      <span class="checkbox-text"
-                        >廚下型（需嵌入櫥櫃，搭配廚房系列門板）</span
-                      >
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group" for="q1-2">
-                      <input
-                        class="checkbox-input"
-                        id="q1-2"
-                        name="q1"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text">獨立式（獨立擺放）</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group" for="q1-3">
-                      <input
-                        class="checkbox-input"
-                        id="q1-3"
-                        name="q1"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text">桌上型（放檯面）</span>
+                      <span class="checkbox-text">{{options.text}}</span>
                     </label>
                   </li>
                 </ul>
               </div>
-              <div id="q2" class="mb-6 hidden">
-                <h4 class="mb-2">Q2.您的安裝空間高度？</h4>
-                <ul class="flex flex-wrap gap-x-2">
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group disabled" for="q2-1">
+              <div
+                id="q2"
+                class="mb-6"
+                :style="{display: questionCurrentIndex === 2 || showQuestion === 'countertop'|| showQuestion === 'others' ? 'block' : 'none'}"
+              >
+                <h4 class="mb-2">
+                  {{q1Answers === "countertop" ? "Q2.您注重的功能？" :
+                  "Q2.您家中可使用的電壓？"}}
+                </h4>
+                <ul class="mb-2 flex flex-wrap gap-x-2">
+                  <li
+                    class="flex-shrink-0"
+                    v-for="(options, index) in q2Options"
+                  >
+                    <label
+                      class="checkbox-group"
+                      :for="'q2-' + index"
+                      @click="handleOptionClick('q2Answers', options)"
+                    >
                       <input
                         class="checkbox-input"
-                        id="q2-1"
+                        :id="'q2-' + index"
                         name="q2"
                         type="radio"
+                        :checked="q2Answers === options"
                       />
                       <span class="checkbox-span"></span>
-                      <span class="checkbox-text">76.5–82.5 cm</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group disabled" for="q2-2">
-                      <input
-                        class="checkbox-input"
-                        id="q2-2"
-                        name="q2"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text">77.5–82.5 cm</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group disabled" for="q2-3">
-                      <input
-                        class="checkbox-input"
-                        id="q2-3"
-                        name="q2"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text">77.5–82.5 cm</span>
+                      <span class="checkbox-text">{{options}}</span>
                     </label>
                   </li>
                 </ul>
               </div>
-              <div id="q3" class="mb-6 hidden">
-                <h4 class="mb-2">Q3.您家中可使用的電壓？</h4>
-                <ul class="flex flex-wrap gap-x-2">
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group option110v" for="q3-1">
+              <div
+                id="q3"
+                class="mb-6"
+                :style="{display: questionCurrentIndex === 3 || showQuestion === 'others' ? 'block' : 'none'}"
+              >
+                <h4 class="mb-2">Q3.您的安裝空間高度？</h4>
+                <ul class="mb-2 flex flex-wrap gap-x-2">
+                  <li
+                    class="flex-shrink-0"
+                    v-for="(options, index) in q3Options"
+                  >
+                    <label
+                      class="checkbox-group"
+                      :for="'q3-' + index"
+                      @click="handleOptionClick('q3Answers', options)"
+                    >
                       <input
                         class="checkbox-input"
-                        id="q3-1"
+                        :id="'q3-' + index"
                         name="q3"
                         type="radio"
+                        :checked="q3Answers === options"
                       />
                       <span class="checkbox-span"></span>
-                      <span class="checkbox-text">有110V插座</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group option220v" for="q3-2">
-                      <input
-                        class="checkbox-input"
-                        id="q3-2"
-                        name="q3"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text">有220V插座</span>
+                      <span class="checkbox-text">{{options}}</span>
                     </label>
                   </li>
                 </ul>
               </div>
-              <div id="q4" class="mb-6 hidden">
+              <div
+                id="q4"
+                class="mb-6"
+                :style="{display: questionCurrentIndex === 4 || showQuestion === 'others' ? 'block' : 'none'}"
+              >
                 <h4 class="mb-2">Q4.您的預算範圍？</h4>
                 <ul class="flex flex-wrap gap-x-2">
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group option2-3w" for="q4-1">
+                  <li
+                    class="flex-shrink-0"
+                    v-for="(options, index) in q4Options"
+                  >
+                    <label
+                      class="checkbox-group"
+                      :for="'q4-' + index"
+                      @click="handleOptionClick('q4Answers', options)"
+                    >
                       <input
                         class="checkbox-input"
-                        id="q4-1"
+                        :id="'q4-' + index"
                         name="q4"
                         type="radio"
+                        :checked="q4Answers === options"
                       />
                       <span class="checkbox-span"></span>
-                      <span class="checkbox-text w-[60px]">2–3 萬</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group option3-4w" for="q4-2">
-                      <input
-                        class="checkbox-input"
-                        id="q4-2"
-                        name="q4"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text w-[60px]">3–4 萬</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group option4-6w" for="q4-3">
-                      <input
-                        class="checkbox-input"
-                        id="q4-3"
-                        name="q4"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text w-[60px]">4–6 萬</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group option6wUp" for="q4-4">
-                      <input
-                        class="checkbox-input"
-                        id="q4-4"
-                        name="q4"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text w-[70px]">6 萬以上</span>
-                    </label>
-                  </li>
-                  <li class="flex-shrink-0">
-                    <label class="checkbox-group optionNoLimit" for="q4-5">
-                      <input
-                        class="checkbox-input"
-                        id="q4-5"
-                        name="q4"
-                        type="radio"
-                      />
-                      <span class="checkbox-span"></span>
-                      <span class="checkbox-text">沒有預算限制</span>
+                      <span class="checkbox-text">{{options}}</span>
                     </label>
                   </li>
                 </ul>
               </div>
-              <div id="answer" class="mb-6 hidden text-center">
-                <div class="justify-center pb-3 pt-6">
+              <div
+                id="answer"
+                class="mb-6 text-center"
+                :class="{hidden: questionCurrentIndex !== 5}"
+              >
+                <div class="justify-center py-6">
                   <span class="mb-4 block flex-shrink-0">推薦品牌</span>
                   <ul class="flex flex-col items-center gap-4">
-                    <li class="brand-link-miele hidden items-center gap-2">
+                    <li
+                      class="brand-link-miele"
+                      :class="{hidden: mieleModel.length === 0}"
+                    >
                       <a
                         class="flex-shrink-0"
                         href="https://miele.kenk.com.tw/application/dish-washer"
@@ -488,11 +441,17 @@
                         ><img
                           class="h-[30px] w-auto"
                           src="assets/images/miele-logo.png"
-                          alt="" /></a
-                      >：
-                      <p class="max-w-[370px]"></p>
+                          alt=""
+                      /></a>
+                      <span>：</span>
+                      <p class="flex max-w-[370px] flex-wrap gap-2">
+                        <span v-for="item in mieleModel">{{ item.model }}</span>
+                      </p>
                     </li>
-                    <li class="brand-link-bertazzoni hidden items-center gap-2">
+                    <li
+                      class="brand-link-bertazzoni"
+                      :class="{hidden: bertazzoniModel.length === 0}"
+                    >
                       <a
                         href="https://bertazzoni.kenk.com.tw/product.php?lang=tw&tb=1&cid=268"
                         target="_blank"
@@ -503,9 +462,17 @@
                           alt=""
                         />
                       </a>
-                      <p></p>
+                      <span>：</span>
+                      <p class="flex max-w-[370px] flex-wrap gap-2">
+                        <span v-for="item in bertazzoniModel"
+                          >{{ item.model }}</span
+                        >
+                      </p>
                     </li>
-                    <li class="brand-link-whirlpool hidden items-center gap-2">
+                    <li
+                      class="brand-link-whirlpool"
+                      :class="{hidden: whirlpoolModel.length === 0}"
+                    >
                       <a
                         href="https://whirlpool.kenk.com.tw/product.php?lang=tw&tb=1&cid=4"
                         target="_blank"
@@ -515,9 +482,17 @@
                           src="assets/images/whirlpool-logo.png"
                           alt=""
                       /></a>
-                      <p></p>
+                      <span>：</span>
+                      <p class="flex max-w-[370px] flex-wrap gap-2">
+                        <span v-for="item in whirlpoolModel"
+                          >{{ item.model }}</span
+                        >
+                      </p>
                     </li>
-                    <li class="brand-link-ke hidden items-center gap-2">
+                    <li
+                      class="brand-link-ke"
+                      :class="{hidden: keModel.length === 0}"
+                    >
                       <a href="https://kedw.kenk.com.tw/" target="_blank">
                         <img
                           class="h-[30px] w-auto"
@@ -525,18 +500,47 @@
                           alt=""
                         />
                       </a>
-                      <p></p>
+                      <span>：</span>
+                      <p class="flex max-w-[370px] flex-wrap gap-2">
+                        <span v-for="item in keModel">{{ item.model }}</span>
+                      </p>
                     </li>
                   </ul>
                 </div>
-                <p data-capture="exclude">點擊品牌前往官網選購！</p>
+                <p v-if="q1Answers==='freestanding'">
+                  (若為廚櫃下方安裝，可扣除上蓋約2-3公分)
+                </p>
+                <p>
+                  依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
+                  請您將此頁面存檔，並攜至鄰近的百貨專櫃或展示中心。我們的服務人員將為您進行更詳細的解說與介紹。
+                </p>
               </div>
               <div
                 class="flex items-center justify-center gap-5"
                 data-capture="exclude"
               >
-                <button class="form-btn form-prev-btn hidden">上一題</button>
-                <button class="form-btn form-next-btn" disabled>下一題</button>
+                <button
+                  class="form-btn form-prev-btn"
+                  v-if="questionCurrentIndex > 1"
+                  @click="handlePrevBtnClick"
+                >
+                  上一題
+                </button>
+                <button
+                  class="form-btn form-next-btn"
+                  :class="{hidden: questionCurrentIndex === 5}"
+                  :disabled="questionCurrentIndex === 1 && q1Answers === '' || questionCurrentIndex === 2 && q2Answers === '' || questionCurrentIndex === 3 && q3Answers === '' || questionCurrentIndex === 4 && q4Answers === ''"
+                  @click="handleNextBtnClick"
+                >
+                  下一題
+                </button>
+                <button
+                  class="form-btn"
+                  :class="{hidden: questionCurrentIndex !== 5}"
+                  @click="screenShot"
+                >
+                  下載問卷
+                </button>
               </div>
             </div>
           </div>
@@ -863,6 +867,7 @@
         /></span>
       </button>
     </div>
+    <script src="https://unpkg.com/petite-vue" defer init></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@zumer/snapdom/dist/snapdom.min.js"></script>
