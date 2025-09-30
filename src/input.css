@@ -18,6 +18,9 @@
 /* <uniquifier>: Use a unique and descriptive class name */
 
 @layer components {
+  [v-cloak] {
+    display: none;
+  }
   .noto-serif-tc {
     font-family: "Noto Serif TC", serif;
     font-optical-sizing: auto;
