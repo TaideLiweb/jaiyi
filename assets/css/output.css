@@ -1242,6 +1242,10 @@ div[class^="light-move"]::after {
   max-width: 650px;
 }
 
+.max-w-\[750px\] {
+  max-width: 750px;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -1547,6 +1551,12 @@ div[class^="light-move"]::after {
 
 /* <uniquifier>: Use a unique and descriptive class name */
 
+@media (min-width: 500px) {
+  .min-\[500px\]\:flex-nowrap {
+    flex-wrap: nowrap;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:bottom-\[-13\%\] {
     bottom: -13%;
@@ -1602,6 +1612,10 @@ div[class^="light-move"]::after {
 
   .md\:flex-wrap {
     flex-wrap: wrap;
+  }
+
+  .md\:flex-nowrap {
+    flex-wrap: nowrap;
   }
 
   .md\:gap-10 {
