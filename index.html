@@ -298,12 +298,12 @@
             </h3>
             <p
               id="quiz-description"
-              class="p-6"
+              class="px-6 py-6 md:px-10"
               v-if="questionCurrentIndex !== 5"
             >
               「每個家庭的廚房格局、生活習慣都不同，挑選洗碗機前，先了解自己的需求很重要。我們為你準備了簡單問題，3分鐘就能幫助你快速判斷，選擇命定機型!
             </p>
-            <div class="p-6">
+            <div class="px-6 py-6 md:px-10">
               <div
                 id="q1"
                 class="mb-6"
@@ -430,7 +430,7 @@
               >
                 <div class="flex flex-col items-center py-6">
                   <span class="mb-4 block flex-shrink-0">推薦品牌</span>
-                  <ul class="flex max-w-[370px] flex-col items-start gap-4">
+                  <ul class="flex max-w-[650px] flex-col items-start gap-4">
                     <li
                       class="brand-link-miele"
                       :class="{hidden: mieleModel.length === 0}"
@@ -445,7 +445,7 @@
                           alt=""
                       /></a>
                       <span>：</span>
-                      <p class="flex flex-wrap gap-2">
+                      <p class="flex flex-wrap">
                         <span v-for="(item, index) in mieleModel"
                           >{{ item.model }}<span
                             v-if="index < mieleModel.length - 1"
@@ -470,10 +470,10 @@
                         />
                       </a>
                       <span>：</span>
-                      <p class="flex flex-wrap gap-2">
-                        <span v-for="item in bertazzoniModel"
+                      <p class="flex flex-wrap">
+                        <span v-for="(item, index) in bertazzoniModel"
                           >{{ item.model }}<span
-                            v-if="index < mieleModel.length - 1"
+                            v-if="index < bertazzoniModel.length - 1"
                             >、</span
                           ></span
                         >
@@ -494,10 +494,10 @@
                           alt=""
                       /></a>
                       <span>：</span>
-                      <p class="flex flex-wrap gap-2">
-                        <span v-for="item in whirlpoolModel"
+                      <p class="flex flex-wrap">
+                        <span v-for="(item, index) in whirlpoolModel"
                           >{{ item.model }}<span
-                            v-if="index < mieleModel.length - 1"
+                            v-if="index < whirlpoolModel.length - 1"
                             >、</span
                           ></span
                         >
@@ -519,10 +519,10 @@
                         />
                       </a>
                       <span>：</span>
-                      <p class="flex flex-wrap gap-2">
-                        <span v-for="item in keModel"
+                      <p class="flex flex-wrap">
+                        <span v-for="(item, index) in keModel"
                           >{{ item.model }}<span
-                            v-if="index < mieleModel.length - 1"
+                            v-if="index < keModel.length - 1"
                             >、</span
                           ></span
                         >

@@ -114,7 +114,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["76.5-80.4"],
+        heights: ["76.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
@@ -122,7 +122,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["76.5-80.4"],
+        heights: ["76.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
