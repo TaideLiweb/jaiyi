@@ -370,7 +370,7 @@
                 class="mb-6"
                 :style="{display: questionCurrentIndex === 3 || showQuestion === 'others' ? 'block' : 'none'}"
               >
-                <h4 class="mb-2">Q3.您的安裝空間高度？</h4>
+                <h4 class="mb-2">Q3.您的安裝空間高度(CM)？</h4>
                 <ul class="mb-2 flex flex-wrap gap-x-2">
                   <li
                     class="flex-shrink-0"
@@ -428,9 +428,9 @@
                 class="mb-6 text-center"
                 :class="{hidden: questionCurrentIndex !== 5}"
               >
-                <div class="justify-center py-6">
+                <div class="flex flex-col items-center py-6">
                   <span class="mb-4 block flex-shrink-0">推薦品牌</span>
-                  <ul class="flex flex-col items-center gap-4">
+                  <ul class="flex max-w-[370px] flex-col items-start gap-4">
                     <li
                       class="brand-link-miele"
                       :class="{hidden: mieleModel.length === 0}"
@@ -445,8 +445,13 @@
                           alt=""
                       /></a>
                       <span>：</span>
-                      <p class="flex max-w-[370px] flex-wrap gap-2">
-                        <span v-for="item in mieleModel">{{ item.model }}</span>
+                      <p class="flex flex-wrap gap-2">
+                        <span v-for="(item, index) in mieleModel"
+                          >{{ item.model }}<span
+                            v-if="index < mieleModel.length - 1"
+                            >、</span
+                          ></span
+                        >
                       </p>
                     </li>
                     <li
@@ -454,6 +459,7 @@
                       :class="{hidden: bertazzoniModel.length === 0}"
                     >
                       <a
+                        class="flex-shrink-0"
                         href="https://bertazzoni.kenk.com.tw/product.php?lang=tw&tb=1&cid=268"
                         target="_blank"
                       >
@@ -464,9 +470,12 @@
                         />
                       </a>
                       <span>：</span>
-                      <p class="flex max-w-[370px] flex-wrap gap-2">
+                      <p class="flex flex-wrap gap-2">
                         <span v-for="item in bertazzoniModel"
-                          >{{ item.model }}</span
+                          >{{ item.model }}<span
+                            v-if="index < mieleModel.length - 1"
+                            >、</span
+                          ></span
                         >
                       </p>
                     </li>
@@ -475,6 +484,7 @@
                       :class="{hidden: whirlpoolModel.length === 0}"
                     >
                       <a
+                        class="flex-shrink-0"
                         href="https://whirlpool.kenk.com.tw/product.php?lang=tw&tb=1&cid=4"
                         target="_blank"
                       >
@@ -484,9 +494,12 @@
                           alt=""
                       /></a>
                       <span>：</span>
-                      <p class="flex max-w-[370px] flex-wrap gap-2">
+                      <p class="flex flex-wrap gap-2">
                         <span v-for="item in whirlpoolModel"
-                          >{{ item.model }}</span
+                          >{{ item.model }}<span
+                            v-if="index < mieleModel.length - 1"
+                            >、</span
+                          ></span
                         >
                       </p>
                     </li>
@@ -494,7 +507,11 @@
                       class="brand-link-ke"
                       :class="{hidden: keModel.length === 0}"
                     >
-                      <a href="https://kedw.kenk.com.tw/" target="_blank">
+                      <a
+                        class="flex-shrink-0"
+                        href="https://kedw.kenk.com.tw/"
+                        target="_blank"
+                      >
                         <img
                           class="h-[30px] w-auto"
                           src="assets/images/ke-logo.png"
@@ -502,8 +519,13 @@
                         />
                       </a>
                       <span>：</span>
-                      <p class="flex max-w-[370px] flex-wrap gap-2">
-                        <span v-for="item in keModel">{{ item.model }}</span>
+                      <p class="flex flex-wrap gap-2">
+                        <span v-for="item in keModel"
+                          >{{ item.model }}<span
+                            v-if="index < mieleModel.length - 1"
+                            >、</span
+                          ></span
+                        >
                       </p>
                     </li>
                   </ul>

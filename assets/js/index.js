@@ -50,7 +50,7 @@ window.App = {
     builtIn: [
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -58,7 +58,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -66,7 +66,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -74,7 +74,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -82,7 +82,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -90,7 +90,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -98,7 +98,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "80.5-87",
+        heights: ["80.5-81.9", "82-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -106,7 +106,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "82-87",
+        heights: ["82-87"],
         budgetNote: "",
         priceRange: "4-6萬",
         brand: "BERTAZZONI",
@@ -114,7 +114,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "76.5-82.5",
+        heights: ["76.5-80.4"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
@@ -122,7 +122,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "76.5-82.5",
+        heights: ["76.5-80.4"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
@@ -132,7 +132,7 @@ window.App = {
     freestanding: [
       {
         voltage: "220V",
-        height: "84.5-91",
+        heights: ["84.5-84.9", "85-87"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -140,7 +140,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "85-87",
+        heights: ["85-87"],
         budgetNote: "",
         priceRange: "4-6萬",
         brand: "BERTAZZONI",
@@ -148,7 +148,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        height: "85",
+        heights: ["85-87"],
         budgetNote: "",
         priceRange: "4-6萬",
         brand: "Whirlpool",
@@ -156,7 +156,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "84.5-91",
+        heights: ["84.5-91"],
         budgetNote: "",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -164,7 +164,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "84.5-91",
+        heights: ["84.5-91"],
         budgetNote: "",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -172,7 +172,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "80.5",
+        heights: ["79.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "Whirlpool",
@@ -180,7 +180,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "79.5-82.5",
+        heights: ["79.5-82.5"],
         budgetNote: "",
         priceRange: "2-3萬",
         brand: "KE",
@@ -190,7 +190,7 @@ window.App = {
     countertop: [
       {
         voltage: "110V",
-        height: "47.5",
+        heights: ["47.5"],
         budgetNote: "",
         function: "獨立烘乾",
         priceRange: "1-2萬",
@@ -199,7 +199,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        height: "47.5",
+        heights: ["47.5"],
         budgetNote: "",
         function: "自動開門烘乾",
         priceRange: "1-2萬",
@@ -231,26 +231,40 @@ window.App = {
 
     // 根據 q2Answers 動態產生 q3Options
     this.dishwashers[this.q1Answers].filter((item) => {
-      if (item.voltage === this.q2Answers) {
-        this.q3Options.push(item.height)
+      if (item.voltage === this.q2Answers || this.q2Answers === "皆可") {
+        item.heights.forEach((height) => {
+          this.q3Options.push(height)
+        })
       }
     })
 
-    // 根據 q2Answers 動態產生 q3Options
+    // 根據 q2Answers & q3Answers 動態產生 q4Options
     this.dishwashers[this.q1Answers].filter((item) => {
-      if (item.voltage === this.q2Answers && item.height === this.q3Answers) {
+      if (
+        (item.voltage === this.q2Answers || this.q2Answers === "皆可") &&
+        (item.heights.includes(this.q3Answers) ||
+          this.q3Answers === "獨立擺放無限制")
+      ) {
         this.q4Options.push(item.priceRange)
       }
     })
 
-    if (this.q1Answers === "countertop") {
-      this.q2Options = [...new Set(this.q2Options), "皆可"]
+    console.log(this.q3Answers)
+
+    // 去除重複選項並排序
+    this.q2Options = [...new Set(this.q2Options)]
+    this.q2Options = this.q2Options.sort()
+    this.q2Options = [...this.q2Options, "皆可"]
+
+    if (this.q1Answers === "freestanding") {
+      this.q3Options = [...new Set(this.q3Options)]
+      this.q3Options = this.q3Options.sort()
+      this.q3Options = [...this.q3Options, "獨立擺放無限制"]
     } else {
-      this.q2Options = [...new Set(this.q2Options)]
-      this.q2Options = this.q2Options.sort()
+      this.q3Options = [...new Set(this.q3Options)]
+      this.q3Options = this.q3Options.sort()
     }
-    this.q3Options = [...new Set(this.q3Options)]
-    this.q3Options = this.q3Options.sort()
+
     this.q4Options = [...new Set(this.q4Options), "無預算限制"]
     this.q4Options = this.q4Options.sort()
   },
@@ -306,8 +320,9 @@ window.App = {
         return item.function === this.q2Answers || this.q2Answers === "皆可"
       } else {
         return (
-          item.voltage === this.q2Answers &&
-          item.height === this.q3Answers &&
+          (item.voltage === this.q2Answers || this.q2Answers === "皆可") &&
+          (item.heights.includes(this.q3Answers) ||
+            this.q3Answers === "獨立擺放無限制") &&
           (item.priceRange === this.q4Answers ||
             this.q4Answers === "無預算限制")
         )

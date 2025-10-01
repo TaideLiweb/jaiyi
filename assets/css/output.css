@@ -1222,6 +1222,10 @@ div[class^="light-move"]::after {
   width: 100%;
 }
 
+.w-\[150px\] {
+  width: 150px;
+}
+
 .max-w-\[370px\] {
   max-width: 370px;
 }
