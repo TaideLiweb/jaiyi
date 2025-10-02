@@ -43,7 +43,7 @@ window.App = {
     },
   ],
 
-  builtIn110vHeights: ["76.5-80.4"],
+  builtIn110vHeights: ["76.5-82.5"],
   builtIn220vHeights: ["80.5-81.9", "82-87"],
   builtInAllHeights: ["76.5-80.4", "80.5-81.9", "82-87"],
   freestanding110vHeights: ["79.5-82.5", "84.5-91", "獨立擺放無限制"],
@@ -122,7 +122,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["76.5-80.4"],
+        heights: ["76.5-80.4", "76.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
@@ -130,7 +130,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["76.5-80.4"],
+        heights: ["76.5-80.4", "76.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
