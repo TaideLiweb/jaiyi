@@ -42,6 +42,14 @@ window.App = {
       value: "countertop",
     },
   ],
+
+  builtIn110vHeights: ["76.5-82.5"],
+  builtIn220vHeights: ["80.5-81.9", "82-87"],
+  builtInAllHeights: ["76.5-80.4", "80.5-81.9", "82-87"],
+  freestanding110vHeights: ["79.5-82.5", "84.5-91", "獨立擺放無限制"],
+  freestanding220vHeights: ["84.5-84.9", "85-87", "獨立擺放無限制"],
+  freestandingAllHeights: ["79.5-82.5", "84.5-85", "87.1-91", "獨立擺放無限制"],
+
   q2Options: [],
   q3Options: [],
   q4Options: [],
@@ -114,7 +122,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["76.5-82.5"],
+        heights: ["76.5-80.4", "76.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
@@ -122,7 +130,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["76.5-82.5"],
+        heights: ["76.5-80.4", "76.5-82.5"],
         budgetNote: "",
         priceRange: "3-4萬",
         brand: "KE",
@@ -132,7 +140,7 @@ window.App = {
     freestanding: [
       {
         voltage: "220V",
-        heights: ["84.5-84.9", "85-87"],
+        heights: ["84.5-84.9", "85-87", "84.5-85", "87.1-91"],
         budgetNote: "無預算限制",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -140,7 +148,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        heights: ["85-87"],
+        heights: ["85-87", "84.5-85"],
         budgetNote: "",
         priceRange: "4-6萬",
         brand: "BERTAZZONI",
@@ -148,7 +156,7 @@ window.App = {
       },
       {
         voltage: "220V",
-        heights: ["85-87"],
+        heights: ["85-87", "84.5-85"],
         budgetNote: "",
         priceRange: "4-6萬",
         brand: "Whirlpool",
@@ -156,7 +164,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["84.5-91"],
+        heights: ["84.5-91", "84.5-85", "87.1-91"],
         budgetNote: "",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -164,7 +172,7 @@ window.App = {
       },
       {
         voltage: "110V",
-        heights: ["84.5-91"],
+        heights: ["84.5-91", "84.5-85", "87.1-91"],
         budgetNote: "",
         priceRange: "6萬以上",
         brand: "Miele",
@@ -230,13 +238,24 @@ window.App = {
     }
 
     // 根據 q2Answers 動態產生 q3Options
-    this.dishwashers[this.q1Answers].filter((item) => {
-      if (item.voltage === this.q2Answers || this.q2Answers === "皆可") {
-        item.heights.forEach((height) => {
-          this.q3Options.push(height)
-        })
-      }
-    })
+    if (this.q1Answers === "builtIn" && this.q2Answers === "110V") {
+      this.q3Options = this.builtIn110vHeights
+    }
+    if (this.q1Answers === "builtIn" && this.q2Answers === "220V") {
+      this.q3Options = this.builtIn220vHeights
+    }
+    if (this.q1Answers === "builtIn" && this.q2Answers === "皆可") {
+      this.q3Options = this.builtInAllHeights
+    }
+    if (this.q1Answers === "freestanding" && this.q2Answers === "110V") {
+      this.q3Options = this.freestanding110vHeights
+    }
+    if (this.q1Answers === "freestanding" && this.q2Answers === "220V") {
+      this.q3Options = this.freestanding220vHeights
+    }
+    if (this.q1Answers === "freestanding" && this.q2Answers === "皆可") {
+      this.q3Options = this.freestandingAllHeights
+    }
 
     // 根據 q2Answers & q3Answers 動態產生 q4Options
     this.dishwashers[this.q1Answers].filter((item) => {
@@ -255,15 +274,6 @@ window.App = {
     this.q2Options = [...new Set(this.q2Options)]
     this.q2Options = this.q2Options.sort()
     this.q2Options = [...this.q2Options, "皆可"]
-
-    if (this.q1Answers === "freestanding") {
-      this.q3Options = [...new Set(this.q3Options)]
-      this.q3Options = this.q3Options.sort()
-      this.q3Options = [...this.q3Options, "獨立擺放無限制"]
-    } else {
-      this.q3Options = [...new Set(this.q3Options)]
-      this.q3Options = this.q3Options.sort()
-    }
 
     this.q4Options = [...new Set(this.q4Options), "無預算限制"]
     this.q4Options = this.q4Options.sort()
@@ -364,6 +374,9 @@ window.addEventListener("load", () => {
   // DOM 元素
   const goToTop = document.getElementById("go-to-top")
   const quizPosition = document.querySelector("#quiz-position")
+  const modal = document.querySelector(".modal")
+  const modalBtn = document.querySelector(".modal-btn")
+  const modalCloseBtn = document.querySelector(".modal-close-btn")
   // const capture = document.querySelector("#capture")
   const formNextBtn = document.querySelector(".form-next-btn")
   const topTitle = document.querySelector(".top-title")
@@ -480,6 +493,24 @@ window.addEventListener("load", () => {
         invalidateOnRefresh: true, // 尺寸變更時重新取 start
       },
     })
+  })
+
+  // --- 4. 事件監聽 ---
+  modalBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    modal.classList.add("active")
+  })
+
+  modalCloseBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    modal.classList.remove("active")
+  })
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("active")
+    }
   })
 
   // 顯示按鈕：當滾動超過 300px

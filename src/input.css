@@ -187,6 +187,10 @@
     outline: 1px solid #bcbcbc;
   }
 
+  .modal.active {
+    display: flex;
+  }
+
   .light-move-1::after {
     /* animation: light-move 2.5s infinite linear; */
     animation: light-move 2.5s 0.3s infinite linear;
