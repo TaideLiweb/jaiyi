@@ -301,7 +301,10 @@
               class="px-6 py-6 md:px-10"
               v-if="questionCurrentIndex !== 5"
             >
-              「每個家庭的廚房格局、生活習慣都不同，挑選洗碗機前，先了解自己的需求很重要。我們為你準備了簡單問題，3分鐘就能幫助你快速判斷，選擇命定機型!
+              「每個家庭的廚房格局、生活習慣都不同，挑選洗碗機前，先了解自己的需求很重要。我們為你準備了簡單問題，3分鐘就能幫助你快速判斷，選擇命定機型！(<span
+                class="modal-btn cursor-pointer text-blue-500 underline underline-offset-2 hover:text-blue-700"
+                >如何測量看這邊</span
+              >)
             </p>
             <div class="px-6 py-6 md:px-10">
               <div
@@ -535,7 +538,17 @@
                 </p>
                 <p>
                   依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
-                  請您將此頁面存檔，並攜至鄰近的百貨專櫃或展示中心。我們的服務人員將為您進行更詳細的解說與介紹。
+                  請您將此頁面存檔，並攜至鄰近的<a
+                    class="text-blue-500 underline underline-offset-2 hover:text-blue-700"
+                    href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
+                    target="_blank"
+                    >百貨專櫃</a
+                  >或<a
+                    class="text-blue-500 underline underline-offset-2 hover:text-blue-700"
+                    href="https://ke.kenk.com.tw/article_d.php?lang=tw&tb=3&id=38&ot=all"
+                    target="_blank"
+                    >展示中心</a
+                  >。我們的服務人員將為您進行更詳細的解說與介紹。
                 </p>
               </div>
               <div
@@ -889,6 +902,22 @@
             alt="go-to-top-arrow"
         /></span>
       </button>
+    </div>
+    <div
+      class="modal fixed left-0 top-0 z-10 hidden h-full w-full items-center justify-center bg-black bg-opacity-50"
+      id="modal"
+    >
+      <div class="modal-content relative mx-5 w-full md:mx-0 md:w-3/4">
+        <span
+          class="modal-close-btn absolute right-2 top-1 cursor-pointer text-2xl"
+          >&times;</span
+        >
+        <img
+          src="assets/images/measure.jpg"
+          width="100%"
+          alt="如何測量安裝空間"
+        />
+      </div>
     </div>
     <script src="https://unpkg.com/petite-vue" defer init></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>

@@ -374,6 +374,9 @@ window.addEventListener("load", () => {
   // DOM 元素
   const goToTop = document.getElementById("go-to-top")
   const quizPosition = document.querySelector("#quiz-position")
+  const modal = document.querySelector(".modal")
+  const modalBtn = document.querySelector(".modal-btn")
+  const modalCloseBtn = document.querySelector(".modal-close-btn")
   // const capture = document.querySelector("#capture")
   const formNextBtn = document.querySelector(".form-next-btn")
   const topTitle = document.querySelector(".top-title")
@@ -490,6 +493,24 @@ window.addEventListener("load", () => {
         invalidateOnRefresh: true, // 尺寸變更時重新取 start
       },
     })
+  })
+
+  // --- 4. 事件監聽 ---
+  modalBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    modal.classList.add("active")
+  })
+
+  modalCloseBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    modal.classList.remove("active")
+  })
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("active")
+    }
   })
 
   // 顯示按鈕：當滾動超過 300px
