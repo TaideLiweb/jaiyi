@@ -402,9 +402,7 @@ window.addEventListener("load", () => {
 
   // 活動 Popup 元素
   const activityPopup = document.getElementById("activity-popup")
-  const activityPopupCloseBtn = document.querySelector(
-    ".activity-popup-close-btn",
-  )
+  const activityPopupClose = document.querySelector(".activity-popup-close")
 
   // const capture = document.querySelector("#capture")
   const formNextBtn = document.querySelector(".form-next-btn")
@@ -526,22 +524,11 @@ window.addEventListener("load", () => {
 
   // --- 4. 事件監聽 ---
 
-  // 活動 Popup 相關事件
-  // 檢查是否已經顯示過活動 popup（使用 sessionStorage）
-  const hasSeenActivityPopup = sessionStorage.getItem("hasSeenActivityPopup")
-
-  if (!hasSeenActivityPopup) {
-    // 頁面載入後 1 秒顯示活動 popup
-    setTimeout(() => {
-      activityPopup.classList.add("active")
-      sessionStorage.setItem("hasSeenActivityPopup", "true")
-    }, 1000)
-  }
+  // 活動 Popup - 頁面載入後顯示
+  activityPopup.classList.add("active")
 
   // 關閉活動 popup
-  activityPopupCloseBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+  activityPopupClose.addEventListener("click", () => {
     activityPopup.classList.remove("active")
   })
 
