@@ -1,18 +1,6 @@
-// // 跳出 Line 內部瀏覽器
-// ;(function () {
-//   const url = new URL(window.location.href)
-//   const params = url.searchParams
-
-//   if (!params.has("openExternalBrowser")) {
-//     // 加上參數
-//     params.set("openExternalBrowser", "1")
-
-//     window.location.replace(`${url.origin}${url.pathname}?${params.toString()}`)
-//   }
-// })()
-
 // 定義一個物件，給 v-scope 使用
 window.App = {
+  isAppBrowser: "",
   quizTitle: "品牌推薦與問卷下載",
   questionCurrentIndex: 1,
 
@@ -200,7 +188,7 @@ window.App = {
         voltage: "110V",
         heights: ["47.5"],
         budgetNote: "",
-        function: "獨立烘乾",
+        function: "獨立熱風烘乾",
         priceRange: "1-2萬",
         brand: "KE",
         model: "KDW-236W",
@@ -322,7 +310,23 @@ window.App = {
     this.whirlpoolModel = []
     this.keModel = []
 
-    console.log(this.q1Answers, this.q2Answers, this.q3Answers, this.q4Answers)
+    // console.log(this.q1Answers, this.q2Answers, this.q3Answers, this.q4Answers)
+
+    if (this.q1Answers === "countertop") {
+      gtag("event", "result", {
+        question1: this.q1Answers,
+        question2: this.q2Answers,
+        resultQuantity: "user",
+      })
+    } else {
+      gtag("event", "result", {
+        question1: this.q1Answers,
+        question2: this.q2Answers,
+        question3: this.q3Answers,
+        question4: this.q4Answers,
+        resultQuantity: "user",
+      })
+    }
 
     // 處理答案邏輯
     const resultAnswers = this.dishwashers[this.q1Answers].filter((item) => {
@@ -353,6 +357,9 @@ window.App = {
   },
 
   async screenShot() {
+    gtag("event", "download", {
+      downloadQuantity: "user",
+    })
     this.quizTitle = "問卷結果"
     if (this.q1Answers === "countertop") {
       this.showQuestion = "countertop"
@@ -366,6 +373,21 @@ window.App = {
     this.showQuestion = ""
     this.quizTitle = "品牌推薦與問卷下載"
   },
+  onMounted() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera
+
+    function detectInAppBrowser() {
+      if (/Line/i.test(userAgent)) return "LINE"
+      if (/FBAN|FBAV|FB_IAB/i.test(userAgent)) return "Facebook"
+      if (/Instagram/i.test(userAgent)) return "Instagram"
+      if (/MicroMessenger/i.test(userAgent)) return "WeChat"
+      if (/GSA/i.test(userAgent)) return "Google App"
+      return false // 表示不是常見內部瀏覽器
+    }
+
+    const result = detectInAppBrowser()
+    this.isAppBrowser = result ? true : false
+  },
 }
 
 window.addEventListener("load", () => {
@@ -377,6 +399,13 @@ window.addEventListener("load", () => {
   const modal = document.querySelector(".modal")
   const modalBtn = document.querySelector(".modal-btn")
   const modalCloseBtn = document.querySelector(".modal-close-btn")
+
+  // 活動 Popup 元素
+  const activityPopup = document.getElementById("activity-popup")
+  const activityPopupCloseBtn = document.querySelector(
+    ".activity-popup-close-btn",
+  )
+
   // const capture = document.querySelector("#capture")
   const formNextBtn = document.querySelector(".form-next-btn")
   const topTitle = document.querySelector(".top-title")
@@ -474,7 +503,7 @@ window.addEventListener("load", () => {
     opacity: 1,
     y: 0,
     duration: 1,
-    stagger: 0.5, // 每個間隔 0.3 秒進場
+    stagger: 0.5, // 每個間隔 0.5 秒進場
     ease: "power2.out",
   })
 
@@ -496,6 +525,34 @@ window.addEventListener("load", () => {
   })
 
   // --- 4. 事件監聽 ---
+
+  // 活動 Popup 相關事件
+  // 檢查是否已經顯示過活動 popup（使用 sessionStorage）
+  const hasSeenActivityPopup = sessionStorage.getItem("hasSeenActivityPopup")
+
+  if (!hasSeenActivityPopup) {
+    // 頁面載入後 1 秒顯示活動 popup
+    setTimeout(() => {
+      activityPopup.classList.add("active")
+      sessionStorage.setItem("hasSeenActivityPopup", "true")
+    }, 1000)
+  }
+
+  // 關閉活動 popup
+  activityPopupCloseBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    activityPopup.classList.remove("active")
+  })
+
+  // 點擊背景關閉活動 popup
+  activityPopup.addEventListener("click", (e) => {
+    if (e.target === activityPopup) {
+      activityPopup.classList.remove("active")
+    }
+  })
+
+  // 原有測量 Modal 事件
   modalBtn.addEventListener("click", (e) => {
     e.preventDefault()
     e.stopPropagation()

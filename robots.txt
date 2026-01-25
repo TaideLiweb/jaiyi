@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dwguide.kenk.com.tw/sitemap.xml

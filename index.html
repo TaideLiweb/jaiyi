@@ -37,6 +37,59 @@
     <!-- 頁面類型（website、article、video、product…）-->
     <meta property="og:type" content="website" />
 
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LV31FG0VB7"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag("js", new Date())
+
+      gtag("config", "G-LV31FG0VB7")
+    </script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments)
+        }
+        if (!f._fbq) f._fbq = n
+        n.push = n
+        n.loaded = !0
+        n.version = "2.0"
+        n.queue = []
+        t = b.createElement(e)
+        t.async = !0
+        t.src = v
+        s = b.getElementsByTagName(e)[0]
+        s.parentNode.insertBefore(t, s)
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      )
+      fbq("init", "1173922081580028")
+      fbq("track", "PageView")
+    </script>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        src="https://www.facebook.com/tr?id=1173922081580028&ev=PageView
+    &noscript=1"
+      />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+
     <link
       rel="icon"
       type="image/png"
@@ -79,8 +132,10 @@
           src="./assets/images/logo.png"
           alt="嘉儀家品"
         />
-        <span class="text-[12px] font-bold text-[#4D4D4D] lg:text-[16px]"
-          >世界品牌一試就上手、選機變輕鬆！</span
+        <a
+          class="text-[12px] font-bold text-[#4D4D4D] lg:text-[16px]"
+          href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2"
+          >2/28前 百貨賞機雙重禮</a
         >
       </div>
     </header>
@@ -124,7 +179,7 @@
                   <img
                     src="./assets/images/Germany.png"
                     width="100%"
-                    alt="Germany"
+                    alt="Germany-icon"
                   />
                 </div>
                 <div class="flex h-[30px] flex-col justify-center">
@@ -286,6 +341,7 @@
             class="w-full bg-white font-[600] text-[#382C27] lg:text-lg"
             id="capture"
             v-scope="App"
+            @vue:mounted="onMounted"
             v-cloak
           >
             <h3
@@ -442,7 +498,7 @@
                         ><img
                           class="h-[30px] w-auto"
                           src="assets/images/miele-logo.png"
-                          alt=""
+                          alt="miele-logo"
                       /></a>
                       <span>：</span>
                       <p class="flex flex-wrap">
@@ -466,7 +522,7 @@
                         <img
                           class="h-[30px] w-auto"
                           src="assets/images/bertazzoni-logo.png"
-                          alt=""
+                          alt="bertazzoni-logo"
                         />
                       </a>
                       <span>：</span>
@@ -491,7 +547,7 @@
                         <img
                           class="h-[30px] w-auto"
                           src="assets/images/whirlpool-logo.png"
-                          alt=""
+                          alt="whirlpool-logo"
                       /></a>
                       <span>：</span>
                       <p class="flex flex-wrap min-[500px]:flex-nowrap">
@@ -515,7 +571,7 @@
                         <img
                           class="h-[30px] w-auto"
                           src="assets/images/ke-logo.png"
-                          alt=""
+                          alt="ke-logo"
                         />
                       </a>
                       <span>：</span>
@@ -535,6 +591,14 @@
                 </p>
                 <p>
                   依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
+                  2/28 前截圖此畫面，並攜至全省<a
+                    class="text-blue-500 underline underline-offset-2 hover:text-blue-700"
+                    href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
+                    target="_blank"
+                    >百貨專櫃</a
+                  >，即可獲得賞機贈品及專屬洗碗機購買禮。
+
+                  <!-- 依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
                   請您將此頁面存檔，並攜至鄰近的<a
                     class="text-blue-500 underline underline-offset-2 hover:text-blue-700"
                     href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
@@ -545,35 +609,46 @@
                     href="https://ke.kenk.com.tw/article_d.php?lang=tw&tb=3&id=38&ot=all"
                     target="_blank"
                     >展示中心</a
-                  >。我們的服務人員將為您進行更詳細的解說與介紹。
+                  >。我們的服務人員將為您進行更詳細的解說與介紹。 -->
                 </p>
               </div>
               <div
-                class="flex items-center justify-center gap-5"
+                class="flex flex-col items-center justify-center gap-2"
                 data-capture="exclude"
               >
-                <button
-                  class="form-btn form-prev-btn"
-                  v-if="questionCurrentIndex > 1"
-                  @click="handlePrevBtnClick"
-                >
-                  上一題
-                </button>
-                <button
-                  class="form-btn form-next-btn"
-                  :class="{hidden: questionCurrentIndex === 5}"
-                  :disabled="questionCurrentIndex === 1 && q1Answers === '' || questionCurrentIndex === 2 && q2Answers === '' || questionCurrentIndex === 3 && q3Answers === '' || questionCurrentIndex === 4 && q4Answers === ''"
-                  @click="handleNextBtnClick"
-                >
-                  下一題
-                </button>
-                <button
-                  class="form-btn"
-                  :class="{hidden: questionCurrentIndex !== 5}"
-                  @click="screenShot"
-                >
-                  下載問卷
-                </button>
+                <div class="flex items-center justify-center gap-5">
+                  <button
+                    class="form-btn form-prev-btn"
+                    v-if="questionCurrentIndex > 1"
+                    @click="handlePrevBtnClick"
+                  >
+                    上一題
+                  </button>
+                  <button
+                    class="form-btn form-next-btn"
+                    :class="{hidden: questionCurrentIndex === 5}"
+                    :disabled="questionCurrentIndex === 1 && q1Answers === '' || questionCurrentIndex === 2 && q2Answers === '' || questionCurrentIndex === 3 && q3Answers === '' || questionCurrentIndex === 4 && q4Answers === ''"
+                    @click="handleNextBtnClick"
+                  >
+                    下一題
+                  </button>
+                  <button
+                    class="form-btn"
+                    :class="{hidden: questionCurrentIndex !== 5}"
+                    @click="screenShot"
+                    :disabled="isAppBrowser"
+                  >
+                    下載問卷
+                  </button>
+                </div>
+                <div class="text-center">
+                  <span
+                    class="text-center text-[12px] text-xs"
+                    v-if="isAppBrowser"
+                    :class="{hidden: questionCurrentIndex !== 5}"
+                    >此為App內建瀏覽器，無法下載問卷<br />請使用手機截圖功能，感謝您！</span
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -604,7 +679,7 @@
                 <img
                   class="h-[30px]"
                   src="assets/images/miele-logo.png"
-                  alt=""
+                  alt="miele-logo"
                 />
               </a>
               <p class="square-card-text">
@@ -652,7 +727,7 @@
                 <img
                   class="h-[30px]"
                   src="assets/images/bertazzoni-logo.png"
-                  alt=""
+                  alt="bertazzoni-logo"
                 />
               </a>
               <p class="square-card-text">
@@ -741,7 +816,11 @@
                 alt=""
               />
               <a class="square-card-logo" target="_blank">
-                <img class="h-[30px]" src="assets/images/ke-logo.png" alt="" />
+                <img
+                  class="h-[30px]"
+                  src="assets/images/ke-logo.png"
+                  alt="ke-logo"
+                />
               </a>
               <p class="square-card-text">
                 <span>是烘碗機，也是洗碗機，專為台灣市場需求量身設計</span>
@@ -802,6 +881,12 @@
                 <!-- Slides -->
                 <div class="swiper-slide">
                   <lite-youtube
+                    videoid="mTb_zMbXh3E"
+                    playlabel="嘉儀家品 世界品牌洗碗機一站選定！"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
                     videoid="MG5iJKAB4hA"
                     playlabel="KE 烘碗洗碗機系列《全新上市》，是烘碗機 也是洗碗機，會烘碗的洗碗機！"
                   ></lite-youtube>
@@ -828,6 +913,24 @@
                   <lite-youtube
                     videoid="jzd3ib12kNo"
                     playlabel="【快看!這是你最嘉之選】3分鐘選品達人幫你快速分析洗碗機"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
+                    videoid="MG5iJKAB4hA"
+                    playlabel="KE 烘碗洗碗機系列《全新上市》，是烘碗機 也是洗碗機，會烘碗的洗碗機！"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
+                    videoid="Cxv6CFn280o"
+                    playlabel="美國Whirlpool- WDFS3R5PIXTW 獨立式洗碗機 使用教學說明"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
+                    videoid="BZL0biLDbcI"
+                    playlabel="德國Miele精品家電｜全方位中式碗籃-專為亞洲家庭量身訂做輕鬆擺放中式碗碟"
                   ></lite-youtube>
                 </div>
               </div>
@@ -886,7 +989,7 @@
       </div>
     </footer>
     <div id="go-to-top">
-      <span class="">選對洗碗機</span>
+      <span class="mb-2">百貨專櫃 <br />限時活動</span>
       <button
         href=""
         class="flex items-center gap-2 rounded-full border border-[#C0A792] px-3 py-0"
