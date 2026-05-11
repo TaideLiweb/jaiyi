@@ -43,42 +43,42 @@
       src="https://www.googletagmanager.com/gtag/js?id=G-LV31FG0VB7"
     ></script>
     <script>
-      window.dataLayer = window.dataLayer || []
+      window.dataLayer = window.dataLayer || [];
       function gtag() {
-        dataLayer.push(arguments)
+        dataLayer.push(arguments);
       }
-      gtag("js", new Date())
+      gtag("js", new Date());
 
-      gtag("config", "G-LV31FG0VB7")
+      gtag("config", "G-LV31FG0VB7");
     </script>
 
     <!-- Facebook Pixel Code -->
     <script>
       !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return
+        if (f.fbq) return;
         n = f.fbq = function () {
           n.callMethod
             ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments)
-        }
-        if (!f._fbq) f._fbq = n
-        n.push = n
-        n.loaded = !0
-        n.version = "2.0"
-        n.queue = []
-        t = b.createElement(e)
-        t.async = !0
-        t.src = v
-        s = b.getElementsByTagName(e)[0]
-        s.parentNode.insertBefore(t, s)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
       })(
         window,
         document,
         "script",
         "https://connect.facebook.net/en_US/fbevents.js",
-      )
-      fbq("init", "1173922081580028")
-      fbq("track", "PageView")
+      );
+      fbq("init", "1173922081580028");
+      fbq("track", "PageView");
     </script>
     <noscript>
       <img
@@ -126,17 +126,34 @@
     <header
       class="fixed left-0 top-0 z-10 flex h-[70px] w-full items-center justify-between bg-white px-[20px] shadow-lg md:h-[90px] md:px-[30px]"
     >
-      <div class="flex items-center md:gap-3">
+      <div class="flex min-w-0 items-center md:gap-3">
         <img
-          class="w-[130px] lg:w-[180px]"
+          class="w-[130px] shrink-0 lg:w-[180px]"
           src="./assets/images/logo.png"
           alt="嘉儀家品"
         />
-        <a
+        <!-- 5/31 後改回：世界品牌一試就上手、選機變輕鬆！ -->
+        <div class="header-marquee ml-3">
+          <div class="header-marquee-track">
+            <span class="header-marquee-content">
+              4/15起~5/31 🎁 母親節限定優惠開跑（活動時間依各大百貨公告為準）✔
+              KE、BERTAZZONI、Whirlpool 等超過10個國際品牌 👉
+              滿額贈，多重好禮「不用抽，買就送！」
+              ✔ Miele 👉 全產品年度最佳入手機會，買就送、通通有禮
+            </span>
+            <span class="header-marquee-content" aria-hidden="true">
+              4/15起~5/31 🎁 母親節限定優惠開跑（活動時間依各大百貨公告為準）
+              ✔ KE、BERTAZZONI、Whirlpool 等超過10個國際品牌 👉
+              滿額贈，多重好禮「不用抽，買就送！」
+              ✔ Miele 👉 全產品年度最佳入手機會，買就送、通通有禮
+            </span>
+          </div>
+        </div>
+        <!-- <a
           class="text-[12px] font-bold text-[#4D4D4D] lg:text-[16px]"
           href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2"
           >2/28前 百貨賞機雙重禮</a
-        >
+        > -->
       </div>
     </header>
     <main class="overflow-hidden">
@@ -590,15 +607,15 @@
                   (若為廚櫃下方安裝，可扣除上蓋約2-3公分)
                 </p>
                 <p>
-                  依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
+                  <!-- 依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
                   2/28 前截圖此畫面，並攜至全省<a
                     class="text-blue-500 underline underline-offset-2 hover:text-blue-700"
                     href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
                     target="_blank"
                     >百貨專櫃</a
-                  >，即可獲得賞機贈品及專屬洗碗機購買禮。
+                  >，即可獲得賞機贈品及專屬洗碗機購買禮。 -->
 
-                  <!-- 依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
+                  依據您提供的資訊，問卷結果已為您初步篩選出最適合的建議型號。<br />
                   請您將此頁面存檔，並攜至鄰近的<a
                     class="text-blue-500 underline underline-offset-2 hover:text-blue-700"
                     href="https://ke.kenk.com.tw/edcontent.php?lang=tw&tb=1&cid=2&ot=all"
@@ -609,7 +626,7 @@
                     href="https://ke.kenk.com.tw/article_d.php?lang=tw&tb=3&id=38&ot=all"
                     target="_blank"
                     >展示中心</a
-                  >。我們的服務人員將為您進行更詳細的解說與介紹。 -->
+                  >。我們的服務人員將為您進行更詳細的解說與介紹。
                 </p>
               </div>
               <div
@@ -881,6 +898,24 @@
                 <!-- Slides -->
                 <div class="swiper-slide">
                   <lite-youtube
+                    videoid="MG5iJKAB4hA"
+                    playlabel="KE 烘碗洗碗機系列《全新上市》，是烘碗機 也是洗碗機，會烘碗的洗碗機！"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
+                    videoid="Cxv6CFn280o"
+                    playlabel="美國Whirlpool- WDFS3R5PIXTW 獨立式洗碗機 使用教學說明"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
+                    videoid="BZL0biLDbcI"
+                    playlabel="德國Miele精品家電｜全方位中式碗籃-專為亞洲家庭量身訂做輕鬆擺放中式碗碟"
+                  ></lite-youtube>
+                </div>
+                <div class="swiper-slide">
+                  <lite-youtube
                     videoid="mTb_zMbXh3E"
                     playlabel="嘉儀家品 世界品牌洗碗機一站選定！"
                   ></lite-youtube>
@@ -913,24 +948,6 @@
                   <lite-youtube
                     videoid="jzd3ib12kNo"
                     playlabel="【快看!這是你最嘉之選】3分鐘選品達人幫你快速分析洗碗機"
-                  ></lite-youtube>
-                </div>
-                <div class="swiper-slide">
-                  <lite-youtube
-                    videoid="MG5iJKAB4hA"
-                    playlabel="KE 烘碗洗碗機系列《全新上市》，是烘碗機 也是洗碗機，會烘碗的洗碗機！"
-                  ></lite-youtube>
-                </div>
-                <div class="swiper-slide">
-                  <lite-youtube
-                    videoid="Cxv6CFn280o"
-                    playlabel="美國Whirlpool- WDFS3R5PIXTW 獨立式洗碗機 使用教學說明"
-                  ></lite-youtube>
-                </div>
-                <div class="swiper-slide">
-                  <lite-youtube
-                    videoid="BZL0biLDbcI"
-                    playlabel="德國Miele精品家電｜全方位中式碗籃-專為亞洲家庭量身訂做輕鬆擺放中式碗碟"
                   ></lite-youtube>
                 </div>
               </div>
@@ -989,7 +1006,11 @@
       </div>
     </footer>
     <div id="go-to-top">
-      <span class="mb-2">百貨專櫃 <br />限時活動</span>
+      <!-- <span>百貨專櫃 <br />限時活動</span>
+      <button class="flex items-center px-3 py-0 text-[25px]">
+        <span>☝️</span>
+      </button> -->
+      <span class="">選對洗碗機</span>
       <button
         href=""
         class="flex items-center gap-2 rounded-full border border-[#C0A792] px-3 py-0"
@@ -1059,7 +1080,7 @@
               <h3 class="mb-2 font-bold">🎁 兌換步驟</h3>
               <p class="ml-4">
                 至嘉儀家品百貨櫃位出示「洗碗機選購測試」完成後的推薦結果畫面，經櫃位人員確認後，即可兌換KE@HOME
-                嘉儀家品摺疊購物袋。
+                嘉儀家品摺疊購物袋。本活動贈品每人限兌換一次，每次限領一份，恕不重複領取。
               </p>
             </div>
 
@@ -1086,7 +1107,10 @@
                 <p>✔ 「KE@HOME 嘉儀家品摺疊購物袋」：完成測試即可兌換</p>
                 <p>✔ 「BRUNO 保溫瓶」：僅限當日臨櫃成交購買洗碗機者</p>
                 <p class="font-semibold">
-                  ※ 贈品數量有限，送完為止，兌換方式依現場人員說明為準。
+                  ※ 贈品數量有限，送完為止;兌換方式依現場人員說明為準。
+                </p>
+                <p class="font-semibold">
+                  ※嘉儀家品保留活動修改、變更及終止之權利。
                 </p>
               </div>
             </div>

@@ -1,3 +1,16 @@
+// // 跳出 Line 內部瀏覽器
+// ;(function () {
+//   const url = new URL(window.location.href)
+//   const params = url.searchParams
+
+//   if (!params.has("openExternalBrowser")) {
+//     // 加上參數
+//     params.set("openExternalBrowser", "1")
+
+//     window.location.replace(`${url.origin}${url.pathname}?${params.toString()}`)
+//   }
+// })()
+
 // 定義一個物件，給 v-scope 使用
 window.App = {
   isAppBrowser: "",
@@ -206,43 +219,43 @@ window.App = {
   },
 
   handleOptionClick(question, value) {
-    this[question] = value
-    this.handleDynamicOption()
+    this[question] = value;
+    this.handleDynamicOption();
   },
   handleDynamicOption() {
-    this.q2Options = []
-    this.q3Options = []
-    this.q4Options = []
+    this.q2Options = [];
+    this.q3Options = [];
+    this.q4Options = [];
 
     // 根據 q1Answers 動態產生 q2Options
     if (this.q1Answers === "countertop") {
       this.dishwashers[this.q1Answers].forEach((item) => {
-        this.q2Options.push(item.function)
-      })
+        this.q2Options.push(item.function);
+      });
     } else {
       this.dishwashers[this.q1Answers].forEach((item) => {
-        this.q2Options.push(item.voltage)
-      })
+        this.q2Options.push(item.voltage);
+      });
     }
 
     // 根據 q2Answers 動態產生 q3Options
     if (this.q1Answers === "builtIn" && this.q2Answers === "110V") {
-      this.q3Options = this.builtIn110vHeights
+      this.q3Options = this.builtIn110vHeights;
     }
     if (this.q1Answers === "builtIn" && this.q2Answers === "220V") {
-      this.q3Options = this.builtIn220vHeights
+      this.q3Options = this.builtIn220vHeights;
     }
     if (this.q1Answers === "builtIn" && this.q2Answers === "皆可") {
-      this.q3Options = this.builtInAllHeights
+      this.q3Options = this.builtInAllHeights;
     }
     if (this.q1Answers === "freestanding" && this.q2Answers === "110V") {
-      this.q3Options = this.freestanding110vHeights
+      this.q3Options = this.freestanding110vHeights;
     }
     if (this.q1Answers === "freestanding" && this.q2Answers === "220V") {
-      this.q3Options = this.freestanding220vHeights
+      this.q3Options = this.freestanding220vHeights;
     }
     if (this.q1Answers === "freestanding" && this.q2Answers === "皆可") {
-      this.q3Options = this.freestandingAllHeights
+      this.q3Options = this.freestandingAllHeights;
     }
 
     // 根據 q2Answers & q3Answers 動態產生 q4Options
@@ -252,63 +265,63 @@ window.App = {
         (item.heights.includes(this.q3Answers) ||
           this.q3Answers === "獨立擺放無限制")
       ) {
-        this.q4Options.push(item.priceRange)
+        this.q4Options.push(item.priceRange);
       }
-    })
+    });
 
-    console.log(this.q3Answers)
+    console.log(this.q3Answers);
 
     // 去除重複選項並排序
-    this.q2Options = [...new Set(this.q2Options)]
-    this.q2Options = this.q2Options.sort()
-    this.q2Options = [...this.q2Options, "皆可"]
+    this.q2Options = [...new Set(this.q2Options)];
+    this.q2Options = this.q2Options.sort();
+    this.q2Options = [...this.q2Options, "皆可"];
 
-    this.q4Options = [...new Set(this.q4Options), "無預算限制"]
-    this.q4Options = this.q4Options.sort()
+    this.q4Options = [...new Set(this.q4Options), "無預算限制"];
+    this.q4Options = this.q4Options.sort();
   },
   handleCheckAnswer() {
     const mapping = {
       q2Answers: this.q2Options,
       q3Answers: this.q3Options,
       q4Answers: this.q4Options,
-    }
+    };
 
     for (const key in mapping) {
       if (!mapping[key].includes(this[key])) {
-        this[key] = ""
+        this[key] = "";
       }
     }
   },
   handleNextBtnClick() {
-    this.handleCheckAnswer()
+    this.handleCheckAnswer();
     if (this.questionCurrentIndex < 5) {
-      this.questionCurrentIndex += 1
+      this.questionCurrentIndex += 1;
     }
 
     if (this.questionCurrentIndex === 3 && this.q1Answers === "countertop") {
-      this.questionCurrentIndex = 5
+      this.questionCurrentIndex = 5;
     }
 
     if (this.questionCurrentIndex === 5) {
-      this.handleResult()
+      this.handleResult();
     }
   },
   handlePrevBtnClick() {
-    this.handleCheckAnswer()
+    this.handleCheckAnswer();
     if (this.questionCurrentIndex === 5 && this.q1Answers === "countertop") {
-      this.questionCurrentIndex = 2
-      return
+      this.questionCurrentIndex = 2;
+      return;
     }
     if (this.questionCurrentIndex > 1) {
-      this.questionCurrentIndex -= 1
+      this.questionCurrentIndex -= 1;
     }
   },
 
   handleResult() {
-    this.mieleModel = []
-    this.bertazzoniModel = []
-    this.whirlpoolModel = []
-    this.keModel = []
+    this.mieleModel = [];
+    this.bertazzoniModel = [];
+    this.whirlpoolModel = [];
+    this.keModel = [];
 
     // console.log(this.q1Answers, this.q2Answers, this.q3Answers, this.q4Answers)
 
@@ -317,7 +330,7 @@ window.App = {
         question1: this.q1Answers,
         question2: this.q2Answers,
         resultQuantity: "user",
-      })
+      });
     } else {
       gtag("event", "result", {
         question1: this.q1Answers,
@@ -325,13 +338,13 @@ window.App = {
         question3: this.q3Answers,
         question4: this.q4Answers,
         resultQuantity: "user",
-      })
+      });
     }
 
     // 處理答案邏輯
     const resultAnswers = this.dishwashers[this.q1Answers].filter((item) => {
       if (this.q1Answers === "countertop") {
-        return item.function === this.q2Answers || this.q2Answers === "皆可"
+        return item.function === this.q2Answers || this.q2Answers === "皆可";
       } else {
         return (
           (item.voltage === this.q2Answers || this.q2Answers === "皆可") &&
@@ -339,86 +352,86 @@ window.App = {
             this.q3Answers === "獨立擺放無限制") &&
           (item.priceRange === this.q4Answers ||
             this.q4Answers === "無預算限制")
-        )
+        );
       }
-    })
+    });
 
     resultAnswers.forEach((item) => {
       if (item.brand === "Miele") {
-        this.mieleModel.push(item)
+        this.mieleModel.push(item);
       } else if (item.brand === "BERTAZZONI") {
-        this.bertazzoniModel.push(item)
+        this.bertazzoniModel.push(item);
       } else if (item.brand === "Whirlpool") {
-        this.whirlpoolModel.push(item)
+        this.whirlpoolModel.push(item);
       } else if (item.brand === "KE") {
-        this.keModel.push(item)
+        this.keModel.push(item);
       }
-    })
+    });
   },
 
   async screenShot() {
     gtag("event", "download", {
       downloadQuantity: "user",
-    })
-    this.quizTitle = "問卷結果"
+    });
+    this.quizTitle = "問卷結果";
     if (this.q1Answers === "countertop") {
-      this.showQuestion = "countertop"
+      this.showQuestion = "countertop";
     } else {
-      this.showQuestion = "others"
+      this.showQuestion = "others";
     }
-    await this.$nextTick()
-    const result = await snapdom(capture, { scale: 2 })
-    await result.download({ format: "png", filename: "問卷結果" })
+    await this.$nextTick();
+    const result = await snapdom(capture, { scale: 2 });
+    await result.download({ format: "png", filename: "問卷結果" });
 
-    this.showQuestion = ""
-    this.quizTitle = "品牌推薦與問卷下載"
+    this.showQuestion = "";
+    this.quizTitle = "品牌推薦與問卷下載";
   },
   onMounted() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
     function detectInAppBrowser() {
-      if (/Line/i.test(userAgent)) return "LINE"
-      if (/FBAN|FBAV|FB_IAB/i.test(userAgent)) return "Facebook"
-      if (/Instagram/i.test(userAgent)) return "Instagram"
-      if (/MicroMessenger/i.test(userAgent)) return "WeChat"
-      if (/GSA/i.test(userAgent)) return "Google App"
-      return false // 表示不是常見內部瀏覽器
+      if (/Line/i.test(userAgent)) return "LINE";
+      if (/FBAN|FBAV|FB_IAB/i.test(userAgent)) return "Facebook";
+      if (/Instagram/i.test(userAgent)) return "Instagram";
+      if (/MicroMessenger/i.test(userAgent)) return "WeChat";
+      if (/GSA/i.test(userAgent)) return "Google App";
+      return false; // 表示不是常見內部瀏覽器
     }
 
-    const result = detectInAppBrowser()
-    this.isAppBrowser = result ? true : false
+    const result = detectInAppBrowser();
+    this.isAppBrowser = result ? true : false;
   },
-}
+};
 
 window.addEventListener("load", () => {
   // --- 1. 變數宣告與常數 ---
 
   // DOM 元素
-  const goToTop = document.getElementById("go-to-top")
-  const quizPosition = document.querySelector("#quiz-position")
-  const modal = document.querySelector(".modal")
-  const modalBtn = document.querySelector(".modal-btn")
-  const modalCloseBtn = document.querySelector(".modal-close-btn")
+  const goToTop = document.getElementById("go-to-top");
+  const quizPosition = document.querySelector("#quiz-position");
+  const modal = document.querySelector(".modal");
+  const modalBtn = document.querySelector(".modal-btn");
+  const modalCloseBtn = document.querySelector(".modal-close-btn");
 
   // 活動 Popup 元素
-  const activityPopup = document.getElementById("activity-popup")
-  const activityPopupClose = document.querySelector(".activity-popup-close")
+  const activityPopup = document.getElementById("activity-popup");
+  const activityPopupClose = document.querySelector(".activity-popup-close");
 
   // const capture = document.querySelector("#capture")
-  const formNextBtn = document.querySelector(".form-next-btn")
-  const topTitle = document.querySelector(".top-title")
+  const formNextBtn = document.querySelector(".form-next-btn");
+  const topTitle = document.querySelector(".top-title");
 
   // 動畫相關元素
-  const circleCards = document.querySelectorAll(".circle-card")
-  const squareCards = document.querySelectorAll(".square-card")
-  const bgDecorate = document.querySelectorAll(".bg-decorate")
+  const circleCards = document.querySelectorAll(".circle-card");
+  const squareCards = document.querySelectorAll(".square-card");
+  const bgDecorate = document.querySelectorAll(".bg-decorate");
 
   // --- 2. 輔助函式 ---
 
   // 處理視窗大小變更
   const resizeHandle = () => {
-    ScrollTrigger.update()
-  }
+    ScrollTrigger.update();
+  };
 
   // --- 3. 初始化 ---
 
@@ -442,10 +455,10 @@ window.addEventListener("load", () => {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
-  })
+  });
   // GSAP 動畫初始化
-  gsap.registerPlugin(ScrollTrigger)
-  const mm = gsap.matchMedia()
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
 
   mm.add(
     {
@@ -453,7 +466,7 @@ window.addEventListener("load", () => {
       desktop: "(min-width: 769px)",
     },
     (ctx) => {
-      const { mobile } = ctx.conditions
+      const { mobile } = ctx.conditions;
 
       circleCards.forEach((el, index) => {
         gsap.to(el, {
@@ -469,8 +482,8 @@ window.addEventListener("load", () => {
             // markers: true, // 除錯時開，正式環境記得關
             invalidateOnRefresh: true, // 尺寸變更時重新取 start
           },
-        })
-      })
+        });
+      });
       squareCards.forEach((el, index) => {
         gsap.to(el, {
           rotationY: 0,
@@ -483,10 +496,10 @@ window.addEventListener("load", () => {
             // markers: true, // 除錯時開，正式環境記得關
             invalidateOnRefresh: true, // 尺寸變更時重新取 start
           },
-        })
-      })
+        });
+      });
     },
-  )
+  );
 
   if (topTitle) {
     gsap.to(topTitle, {
@@ -494,7 +507,7 @@ window.addEventListener("load", () => {
       opacity: 1,
       duration: 0.8,
       ease: "power2.out",
-    })
+    });
   }
 
   gsap.to(".dishwasher", {
@@ -503,7 +516,7 @@ window.addEventListener("load", () => {
     duration: 1,
     stagger: 0.5, // 每個間隔 0.5 秒進場
     ease: "power2.out",
-  })
+  });
 
   bgDecorate.forEach((el, index) => {
     gsap.to(el, {
@@ -519,61 +532,61 @@ window.addEventListener("load", () => {
         // markers: true, // 除錯時開，正式環境記得關
         invalidateOnRefresh: true, // 尺寸變更時重新取 start
       },
-    })
-  })
+    });
+  });
 
   // --- 4. 事件監聽 ---
 
   // 活動 Popup - 頁面載入後顯示
-  activityPopup.classList.add("active")
+  // activityPopup.classList.add("active")
 
   // 關閉活動 popup
   activityPopupClose.addEventListener("click", () => {
-    activityPopup.classList.remove("active")
-  })
+    activityPopup.classList.remove("active");
+  });
 
   // 點擊背景關閉活動 popup
   activityPopup.addEventListener("click", (e) => {
     if (e.target === activityPopup) {
-      activityPopup.classList.remove("active")
+      activityPopup.classList.remove("active");
     }
-  })
+  });
 
   // 原有測量 Modal 事件
   modalBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    modal.classList.add("active")
-  })
+    e.preventDefault();
+    e.stopPropagation();
+    modal.classList.add("active");
+  });
 
   modalCloseBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    modal.classList.remove("active")
-  })
+    e.preventDefault();
+    e.stopPropagation();
+    modal.classList.remove("active");
+  });
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
-      modal.classList.remove("active")
+      modal.classList.remove("active");
     }
-  })
+  });
 
   // 顯示按鈕：當滾動超過 300px
   window.addEventListener("scroll", () => {
     if (window.scrollY > 200) {
-      goToTop.classList.add("active")
+      goToTop.classList.add("active");
     } else {
-      goToTop.classList.remove("active")
+      goToTop.classList.remove("active");
     }
-  })
+  });
 
   // 點擊按鈕：平滑捲回頂部
   goToTop.addEventListener("click", () => {
-    quizPosition.scrollIntoView({ behavior: "smooth" })
-  })
+    quizPosition.scrollIntoView({ behavior: "smooth" });
+  });
 
   // 視窗大小變更
-  window.addEventListener("resize", resizeHandle)
+  window.addEventListener("resize", resizeHandle);
 
   // 執行一次 resize 處理
-  resizeHandle()
-})
+  resizeHandle();
+});

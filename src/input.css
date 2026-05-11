@@ -116,7 +116,7 @@
     @apply gradient-white-blue-3 py-5 text-white;
   }
   #go-to-top {
-    @apply gradient-gold-2 pointer-events-none fixed bottom-[80px] right-[25px] z-10 flex cursor-pointer flex-col items-center rounded-2xl border border-[#C8B3A1] bg-[#C8B3A1] px-3 pb-3 pt-2 text-[#E7DDD5] opacity-0 shadow-[0_5px_0px_#C8B3A1] transition-opacity duration-300;
+    @apply gradient-gold-2 pointer-events-none fixed bottom-[80px] right-[25px] z-10 flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-[#C8B3A1] bg-[#C8B3A1] px-3 pb-3 pt-2 text-[#E7DDD5] opacity-0 shadow-[0_5px_0px_#C8B3A1] transition-opacity duration-300;
   }
   #go-to-top.active {
     @apply pointer-events-auto opacity-100 hover:opacity-90;
@@ -126,6 +126,21 @@
   .brand-link-whirlpool,
   .brand-link-ke {
     @apply flex items-center gap-2;
+  }
+  .header-marquee {
+    @apply relative min-w-0 flex-1 overflow-hidden text-[#4D4D4D];
+  }
+  .header-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: header-marquee-scroll 28s linear infinite;
+  }
+  .header-marquee-content {
+    @apply flex shrink-0 items-center whitespace-nowrap text-[11px] font-bold lg:text-[16px];
+    padding-right: 2.5rem;
+  }
+  .header-marquee-separator {
+    @apply mx-3 text-[#754C24];
   }
   .checkbox-group {
     position: relative;
@@ -231,6 +246,15 @@
     }
     100% {
       transform: translate(100%, 100%);
+    }
+  }
+
+  @keyframes header-marquee-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 }
